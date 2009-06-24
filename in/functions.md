@@ -10,6 +10,7 @@ You can call functions only from [[template_mako]]. An example:
 
 Here's list of functions defined by webber and it's default plugins:
 
+
 == format_date ==
 
 Takes a timestamp (seconds since 1st January 1970) and converts it into
@@ -17,17 +18,27 @@ a string, using to `cfg.date_format`.
 
 Defined in `webber.py`.
 
+
+== get_time ==
+
+Returns the current date/time as a string according to `cfg.date_format`.
+
+Defined in `webber.py`.
+
+
 == get_breadcrumbs ==
 
 Returns the breadcrumbs as "`(linktitle, link)`" tuples.
 
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
+
 == get_current_file ==
 
 Returns the current `class File` object.
 
 Defined in `webber.py`.
+
 
 == get_recently ==
 

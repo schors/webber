@@ -188,11 +188,16 @@ def relpath(base_path, target):
 
 def get_link_from(source, dest):
 	#print "get_link_from", source, dest
-	source = get_file_for(source)
+	#print source
+	if not isinstance(source, File):
+		source = get_file_for(source)
 	if not source:
+		print "NO SOURCE"
 		return "."
-	dest = get_file_for(dest)
+	if not isinstance(dest, File):
+		dest = get_file_for(dest)
 	if not dest:
+		print "NO DEST"
 		return "."
 	rel_path = relpath(directories[source.direc].abs_path, directories[dest.direc].abs_path)
 	try:
@@ -416,6 +421,10 @@ def iso_to_time(val):
 @set_function("format_date")
 def format_date(timestamp):
 	return time.strftime(cfg.date_format, time.localtime(timestamp))
+
+@set_function("get_time")
+def get_time():
+	return format_date(time.time())
 
 @set_function("get_current_file")
 def get_current_file():
