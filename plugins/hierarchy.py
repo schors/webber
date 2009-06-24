@@ -104,11 +104,11 @@ def get_sidemenu(page):
 
 	Example:
 		0 1 0 Home
-		0 1 0 Beruf
-		1 0 0 Kenntnisse
-		1 1 0 Werdegang
-		2 0 1 Alte
-		0 0 0 Haus
+		1 1 0 Beruf
+		2 0 0 Kenntnisse
+		2 1 0 Werdegang
+		3 0 1 Alte
+		1 0 0 Haus
 	"""
 	# Determine root page:
 	bread = get_breadcrumbs(page)
@@ -138,10 +138,46 @@ def get_sidemenu(page):
 
 	# TODO: make this configurable, e.g. cfg.rootpage, otherwise a page
 	# that is outside of the menu won't show a menu
-	do_menu("Home", 0)
+	do_menu(root, 1)
 	return res
 
 
+
+@set_function("get_sitemap")
+def get_sitemap(page):
+	# Determine root page:
+	root = "Home" #TODO
+	
+	res = [(0, get_file_for(root).title, get_link_from(page, root))]
+
+	visited = {root: None}
+	def do_menu(pg, level):
+		#print "pg, has_key:", pg, _childs.has_key(pg)
+		if _childs.has_key(pg):
+			for p in _childs[pg]:
+				subpage = p[1]
+
+				#print "subpage:", subpage, "in bread:", in_bread, "go deeper:", go_deeper
+				link = get_link_from(page, subpage)
+				res.append((level, subpage, link))
+				visited[subpage] = None
+				do_menu(subpage, level+1)
+
+	do_menu(root, 1)
+	#print visited
+	for f in files:
+		#print f
+		file = files[f]
+		try:
+			if file.linktitle in visited:
+				#print "found", file.linktitle
+				continue
+		except KeyError:
+			continue
+		#print "not found:", file.linktitle
+		res.append( (0, file.title, get_link_from(page, file.linktitle)))
+	#for t in res: print t
+	return res
 
 
 @set_function("get_recently")
@@ -192,4 +228,5 @@ if __name__ == "__main__":
 	#print get_breadcrumbs("Kenntnisse")
 	#for t in get_sidemenu("Home"): print t
 	#for t in get_sidemenu("Beruf"): print t
-	for t in get_sidemenu("Kenntnisse"): print t
+	#for t in get_sidemenu("Kenntnisse"): print t
+	for t in get_sitemap("Home"): print t

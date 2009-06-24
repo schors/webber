@@ -1,0 +1,13 @@
+<%inherit file="default.tmpl"/>
+#######################################################################
+<%def name="contents()">\
+${body}
+<%
+  site = get_sitemap(get_current_file())
+%>
+<ul>
+% for level, title, link in site:
+<li class="sitemap${level}"><a href="${link}">${title}</a></li>
+% endfor
+</ul>
+</%def>\
