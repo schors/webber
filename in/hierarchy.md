@@ -1,0 +1,138 @@
+title: Generate hierarchy
+linktitly: Hierarchy
+parent: Plugins
+ctime: 2009-06-26
+
+This is one of the more complex plugins, used to generate menus and
+breadcrumbs. For this, it reads certain keyword from the
+[[pageformat]], built an internal parent-child representation.
+
+This is later used for by the functions "`get_breadcrumbs()`" and
+"`get_sidemenu()`", which you call from the [[template_mako]].
+
+= Page attributes =
+
+At the "`scan`" [[hook|hooks]], the plugin looks for entries like:
+
+	parent: Home
+
+or
+
+	childs: Cmdline, Inheritance
+
+Here's an example of five pages with different attributes:
+
+---
+
+	title: Homepage
+	linktitle: Home
+
+---
+
+	title: Impressum
+	parent: Home
+
+---
+
+	title: Job
+	parent: Home
+
+---
+
+	title: CV
+	parent: Job
+
+---
+
+	title: Knowledge
+	parent: Job
+
+---
+
+= Internal representation =
+
+the plugin would populate the variables "`_childs`" and "`_parent`" like this:
+
+	_parent = {
+		'Impressum': 'Home',
+		'CV': 'Job',
+		'Knowledge': 'Job',
+		'Job': 'Home'
+	}
+
+	_childs = {
+		'Home': [(100, 'Job'),
+		         (100, 'Impressum')],
+		'Job':  [(100, 'CV'),
+		         (100, 'Knowledge')]}
+
+That's all you need to generate a sidemap, breadcrumbs or a side-menu.
+
+The pages are first ordered by some number, then by the "`linktitle`". If
+a page has no "`linktitle:`" attribute, then the normal title will be used
+instead.
+
+If you want to modify the sort-order, simply specify a "`order: 200`" in the
+page itself.
+
+= Generation of breadcrumbs =
+
+This is done via a suitable [[template_mako]]. The
+template uses the function "`get_breadcrumbs(linktitle)`" and returns
+(linktitle, link) tuples. As a bonus: all the links are always relative to
+the calling page.
+
+Here's a sample Mako template excerpt:
+
+	<ul>\
+	% for linktitle, link in get_breadcrumbs(file.linktitle):
+	<li><a href="${link}">${linktitle}</a></li>\
+	% endfor
+	</ul>\
+
+= Generation of a side-menu =
+
+This again is done via a suitable [[template_mako]]. The
+template uses the function "`get_sidemenu(linktitle)`" and returns (level,
+part_of_path, is_current, title, link) tuples. Again all links are relative
+to the calling page.
+
+* "`level`" is the indendation level, starting with 0. You can use this for
+  CSS "`id=`" or "`class`" attributes
+* "`part_of_path`" is a flag telling you if the mentioned page is part
+  of your path, i.e. if the specified page is in the breadcrumbs.
+* "`is_current`" is a flag marking the current page.
+* "`title`" is the full title for the page
+* "`link`" is the relative URL to the page
+
+Here's a sample Mako template excerpt that converts this into a HTML menu:
+
+	<ul id="sidebar">
+	% for level, part_of_path, current, title, link in get_sidemenu(file.linktitle):
+	<li class="sidebar${level}"\
+	%    if current:
+	 id="sidebar_current">${title | entity}</li>
+	%    else:
+	><a href="${link}">${title | entity}</a></li>
+	%    endif
+	% endfor
+	</ul>
+
+= Generate a list of recently changed pages =
+
+To get a list of recently changed pages, do this:
+
+	<%
+	  history = get_recently(get_current_file())
+	%>
+	% if len(history)>1:
+	<h2>Recent changed</h2>
+	%   for mtime,ctime,title,link in history:
+	%     if mtime > ctime:
+	        Modified ${format_date(mtime)}\
+	%     else:
+	        Created ${format_date(ctime)}\
+	%     endif
+	: <a href="${link}">${title | entity}</a><br />
+	%   endfor
+	% endif

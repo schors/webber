@@ -1,0 +1,19 @@
+<%inherit file="default.tmpl"/>
+#######################################################################
+<%def name="contents()">\
+${body}
+<%
+  history = get_recently(get_current_file())
+%>
+% if len(history)>1:
+<h2>What's new?</h2>
+%   for mtime,ctime,title,link in history:
+%     if mtime > ctime:
+        Modified ${format_date(mtime)}\
+%     else:
+        Created ${format_date(ctime)}\
+%     endif
+: <a href="${link}">${title | entity}</a><br />
+%   endfor
+% endif
+</%def>\

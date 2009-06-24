@@ -1,0 +1,26 @@
+#!/usr/bin/python
+# -*- coding: iso-8859-1 -*-
+
+import sys
+from webber import main
+
+if __name__ == "__main__":
+	if '--profile' in sys.argv:
+
+		sys.argv.remove('--profile')
+		print 'Starting profile'
+		
+		import hotshot, hotshot.stats
+		prof = hotshot.Profile('newbuild.prof')
+		prof.runcall(main)
+		prof.close()
+		
+		print 'Profile completed'
+		
+		stats = hotshot.stats.load('newbuild.prof')
+		#stats.strip_dirs()
+		stats.sort_stats('time', 'calls')
+		stats.print_stats(50)	
+
+	else:
+		main()

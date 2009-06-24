@@ -1,0 +1,22 @@
+<%def name="contents()">\
+${body}
+</%def>\
+#######################################################################
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>${file.title | entity}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=${file.output_encoding}"/>
+% if len(keywords):
+	<meta name="keywords" content="${keywords | entity}" />
+% endif
+% if len(description):
+	<meta name="description" content="${description | entity}" />
+% endif
+</head>
+<body>
+<h1>${file.title | entity}</h1>
+${self.contents()}
+</body>
+</html>
