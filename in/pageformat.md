@@ -94,7 +94,7 @@ the document creation date/time. Examples:
 If you don't specify this, then the documents "`mtime`" will be used instead.
 
 
-== mtime
+== mtime ==
 
 Here you can specify an ISO formatted date and or time specifier, which contains
 the document modification date/time. Examples:
@@ -106,3 +106,26 @@ If you don't specify this, then the "last-modified"-time from the file-system
 will be used instead.
 
 
+== template ==
+
+Allows you to override the default template. Just specify the pure file
+name. For convenience, you can ommit "`.tmpl`".
+
+	title: Blog
+	template: history
+
+
+== description ==
+
+Anything you specify here will be accessible in the template as ${description}.
+You can use this for HTML meta information, see [[template_make]].
+
+If you don't specify a description, then ${description} will be the empty string.
+
+
+== keywords ==
+
+Anything you specify here will be accessible in the template as ${keywords}.
+You can use this for HTML meta information, see [[template_make]].
+
+If you don't specify a description, then ${keywords} will be the empty string.
