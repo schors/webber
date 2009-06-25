@@ -29,6 +29,7 @@ def get_template(file):
 	else:
 		lookup = TemplateLookup(
 			directories = (extra_dir, file.style_dir),
+			input_encoding = file.input_encoding,
 			output_encoding = file.output_encoding,
 			encoding_errors='replace',
 			filesystem_checks = False)
