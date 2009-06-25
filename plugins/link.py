@@ -29,6 +29,8 @@ def do_link(m):
 		#link = link.tolower()
 		for f in files:
 			file = files[f]
+			if not file.has_key("linktitle"):
+				continue
 			if file.title == link or \
 			   file.linktitle == link or \
 			   os.path.splitext(os.path.basename(file.path))[0] == link:
