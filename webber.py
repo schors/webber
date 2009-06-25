@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-import sys, os, optparse, fnmatch, stat, re, time, types
+import sys, os, optparse, fnmatch, stat, re, time, codecs
 from config import Holder
 
 
@@ -69,36 +69,45 @@ class File(Holder):
 		#print self.keys()
 
 	reKeywords = re.compile(r'(\S+)\s*:\s*(.*)')
-	#reIsoDate = re.compile(r'(\d\d\d\d)-(\d\d)-(\d\d)')
 
-	def read_keywords(self, terminate_line=""):
-		"""Opens the file and reads "key: value" pairs on the top of it. Returns
-		the open file handle for further processing by some plugins/read_*.py code."""
-		f = open(self.path)
-		while True:
-			s = f.readline().strip()
-			if s==terminate_line:
-				break
-			m = self.reKeywords.match(s)
-			if not m:
-				warning("%s: wrong 'key: value' line '%s'" % (self.rel_path, s))
-				break
-			key = m.group(1).lower()
-			val = m.group(2)
+	def read(self, terminate_line=""):
+		f = codecs.open(self.path, "r", self.input_encoding)
 
-			if key == "mtime":
-				val = iso_to_time(val)
+		# Read keywords
+		read_keywords = True
+		txt = []
+		for s in f.readlines():
+			if read_keywords:
+				s = s.strip()
+				#print "kwd:", s
+				if s==terminate_line:
+					read_keywords = False
+					continue
 
-			if key == "ctime":
-				val = iso_to_time(val)
+				m = self.reKeywords.match(s)
+				if not m:
+					warning("%s: wrong 'key: value' line '%s'" % (self.rel_path, s))
+					break
+				key = m.group(1).lower()
+				val = m.group(2)
 
-			if key == "title":
-				if not self.has_key("linktitle"):
-					self["linktitle"] = val
+				if key == "mtime":
+					val = iso_to_time(val)
 
-			#print self.rel_path, key, val
-			self[key] = val
-		return f
+				if key == "ctime":
+					val = iso_to_time(val)
+
+				if key == "title":
+					if not self.has_key("linktitle"):
+						self["linktitle"] = val
+
+				#print self.rel_path, key, val
+				self[key] = val
+
+				continue
+			#print "txt:", s.rstrip().encode("iso-8859-1")
+			txt.append(s)
+		self.contents = "".join(txt)
 
 
 _get_file_for_cache = {}
@@ -567,7 +576,7 @@ def run_macros(file, contents):
 			kw["file"] = file
 			f = macros[name]
 			s = f(kw)
-			if type(s) == types.UnicodeType:
+			if isinstance(s, unicode):
 				s = s.encode("utf-8")
 			return s
 		else:

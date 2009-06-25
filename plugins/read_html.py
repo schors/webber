@@ -7,8 +7,7 @@ def read(params):
 	file = params.file
 	if file.rel_path.endswith(".html"):
 		file.render = "html"
-		f = file.read_keywords()
-		return f.read()
+		file.read()
 
 
 @set_hook("htmlize")

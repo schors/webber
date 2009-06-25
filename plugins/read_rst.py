@@ -9,9 +9,7 @@ def read(params):
 	file = params.file
 	if file.rel_path.endswith(".rst"):
 		file.render = "html"
-		f = file.read_keywords()
-		return f.read()
-
+		file.read()
 
 
 class WebHTMLTranslator(html4css1.HTMLTranslator):
