@@ -1,5 +1,5 @@
 title: Templates
-parent: Home
+parent: Webber
 ctime: 2009-06-26
 
 TODO

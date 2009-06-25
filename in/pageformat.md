@@ -1,5 +1,5 @@
 title: Page format
-parent: Home
+parent: Webber
 ctime: 2009-06-26
 
 Every page contains a header, then a blank line, and then the text that

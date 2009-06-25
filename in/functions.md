@@ -1,5 +1,5 @@
 title: Functions
-parent: Home
+parent: Webber
 ctime: 2009-06-26
 
 = Calling functions =
@@ -48,10 +48,22 @@ page, you'll get a "`(mtime, ctime, title, link)`" tuple back.
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
 
-== get_sidemenu ==
+== get_sidemenu(root) ==
 
 Returns a menu for the current page. For each page in this menu you'll
 get back a "`(level, part_of_path, is_current, title, link)`" tuple.
+
+Defined in [[hierarchy.py|hierarchy]], where you find an example.
+
+
+== get_sitemap(home, show_orphans) ==
+
+Returns all pages as "`(level, title, link)`" tuples.
+
+You'll need to specify "`root`" if your top-most page is a different one.
+
+To put pages into the sitemap that are outside the parent/child relationships,
+specify "`True`" for "`show_orphans`".
 
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
