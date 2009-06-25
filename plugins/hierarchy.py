@@ -21,20 +21,10 @@ def memorize_links(title, links):
 		_parent[link] = title
 
 
-def memorize_parent(title, parent, order):
+def memorize_parent(title, parent, order=100):
 	#print "memorize_parent:", title, parent
 	#print "  parent:", _parent
 	#print "  childs:", _childs
-	if order==-1:
-		order = 0
-		if _childs.has_key(parent):
-			for c in _childs:
-				for o,n in _childs[c]:
-					if o > order:
-						order = o
-		else:
-			_childs[parent] = []
-		order += 100
 	#print "order:", title, order
 	if not _childs.has_key(parent):
 		_childs[parent] = []
@@ -58,7 +48,7 @@ def scan(params):
 		if file.has_key("order"):
 			order = int(file.order)
 		else:
-			order = -1
+			order = 100
 		memorize_parent(file.linktitle, file.parent, order)
 
 
