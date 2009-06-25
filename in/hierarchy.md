@@ -136,3 +136,42 @@ To get a list of recently changed pages, do this:
 	: <a href="${link}">${page.title | entity}</a><br />
 	%   endfor
 	% endif
+
+
+= Generate a sitemap =
+
+To generate a site map for your whole project, do something like
+this:
+
+	<%
+	  site = get_sitemap()
+	%>
+	<ul>
+	% for level, page, link in site:
+	<li id="sidemap${level}"><a href="${link}">${page.title}</a></li>
+	% endfor
+	</ul>
+
+Now you'd need to use CSS to indent the entries. If you prefer a more
+normal "`<ul>..<li><ul><li></li></ul>..</il>`" style, you'd could do this
+with some more advanced Mako template magic:
+
+	<%
+	  site = get_sitemap()
+	  lvl = -1
+	%>
+	% for level, page, link in site:
+	### Adjust level by indenting/detenting via <ul> or </ul>:
+	%   while lvl < level:
+	<ul><% lvl += 1 %>
+	%   endwhile
+	%   while lvl > level:
+	</ul><% lvl -= 1 %>
+	%   endwhile
+	### Print out the <li>
+	<li id="sidemap${level}"><a href="${link}">${page.title}</a></li>
+	% endfor
+	### At the end of the sitemap, detent back to level -1
+	% while lvl >= 0:
+	</ul><% lvl -= 1 %>
+	% endwhile
