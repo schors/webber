@@ -182,6 +182,5 @@ def get_recently(page=None, max_items=10):
 				if len(res) < max_items:
 					addPage(res, get_file_for(c[1]))
 	addPage(res, orig_page)
-	res.sort(cmp = lambda x,y: x[0].mtime < y[0].mtime)
-	#for p in res: print p
+	res.sort(cmp = lambda x,y: cmp(y[0].mtime, x[0].mtime))
 	return res
