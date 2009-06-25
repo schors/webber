@@ -3,11 +3,11 @@
 <%def name="contents()">\
 ${body}
 <%
-  site = get_sitemap(get_current_file())
+  site = get_sitemap("Webber", True)
 %>
 <ul>
-% for level, title, link in site:
-<li class="sitemap${level}"><a href="${link}">${title}</a></li>
+% for level, page, link in site:
+<li class="sitemap${level}"><a href="${link}">${page.title}</a></li>
 % endfor
 </ul>
 </%def>\

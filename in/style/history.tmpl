@@ -3,17 +3,17 @@
 <%def name="contents()">\
 ${body}
 <%
-  history = get_recently(get_current_file())
+  recently = get_recently()
 %>
-% if len(history)>1:
+% if len(recently)>1:
 <h2>What's new?</h2>
-%   for mtime,ctime,title,link in history:
-%     if mtime > ctime:
-        Modified ${format_date(mtime)}\
+%   for page, link in recently:
+%     if page.mtime > page.ctime:
+        Modified ${format_date(page.mtime)}\
 %     else:
-        Created ${format_date(ctime)}\
+        Created ${format_date(page.ctime)}\
 %     endif
-: <a href="${link}">${title | entity}</a><br />
+: <a href="${link}">${page.title | entity}</a><br />
 %   endfor
 % endif
 </%def>\

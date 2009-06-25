@@ -1,4 +1,5 @@
 # -*- coding: iso-8859-1 -*-
+import webber
 from webber import *
 import re
 
@@ -69,50 +70,38 @@ def scan_done(params):
 
 
 @set_function("get_breadcrumbs")
-def get_breadcrumbs(orig_page):
-	"""Returns something like ['Home', 'Beruf', 'Werdegang']. This can
-	be easyly used to generate breadcrumbs HTML code."""
+def get_breadcrumbs(orig_page=None):
+	if orig_page is None:
+		orig_page = get_current_file()
 	res = [(orig_page, get_link_from(orig_page, orig_page))]
 	page = orig_page
 	#print "orig_page:", orig_page
-	while _parent.has_key(page):
-		page = _parent[page]
+	while _parent.has_key(page.linktitle):
+		page = get_file_for(_parent[page.linktitle])
 		link = get_link_from(orig_page, page)
 		#print "  page, link:", page, link
 		res.insert(0, (page, link))
+	#print res
 	return res
 
 
-
 @set_function("get_sidemenu")
-def get_sidemenu(page):
-	"""Returns an array with a side-menu. Everything from the current
-	page upwards is shown, as well as one level below the current
-	position. The array has the following items:
+def get_sidemenu(root="Home", level=1):
+	page = get_current_file()
+	if not isinstance(root, webber.File):
+		root = get_file_for(root)
 
-	level  part-of-path  current-page  title
-
-	Example:
-		0 1 0 Home
-		1 1 0 Beruf
-		2 0 0 Kenntnisse
-		2 1 0 Werdegang
-		3 0 1 Alte
-		1 0 0 Haus
-	"""
-	# Determine root page:
-	bread = get_breadcrumbs(page)
+	bread = get_breadcrumbs()
 	#print "Menu for:", page
 	#print "Bread:", bread
 
-	root = "Home" #TODO
 	res = [(0, 1, int(root==page), root, get_link_from(page, root))]
 
 	def do_menu(pg, level):
 		#print "pg, has_key:", pg, _childs.has_key(pg)
-		if _childs.has_key(pg):
-			for p in _childs[pg]:
-				subpage = p[1]
+		if _childs.has_key(pg.linktitle):
+			for p in _childs[pg.linktitle]:
+				subpage = get_file_for(p[1])
 				in_bread = False
 				for b in bread:
 					if b[0] == subpage:
@@ -122,101 +111,77 @@ def get_sidemenu(page):
 				go_deeper = in_bread or (subpage==page)
 				#print "subpage:", subpage, "in bread:", in_bread, "go deeper:", go_deeper
 				link = get_link_from(page, subpage)
-				res.append((level, int(subpage in bread), int(subpage==page), subpage, link))
+				res.append((level, in_bread, int(subpage==page), subpage, link))
 				if go_deeper:
 					do_menu(subpage, level+1)
 
 	# TODO: make this configurable, e.g. cfg.rootpage, otherwise a page
 	# that is outside of the menu won't show a menu
-	do_menu(root, 1)
+	do_menu(root, level)
 	return res
 
 
 
 @set_function("get_sitemap")
-def get_sitemap(page):
-	# Determine root page:
-	root = "Home" #TODO
-	
-	res = [(0, get_file_for(root).title, get_link_from(page, root))]
+def get_sitemap(root="Home", show_orphans=False, level=1):
+	page = get_current_file()
+	if not isinstance(root, webber.File):
+		root = get_file_for(root)
+
+	res = [(0, root, get_link_from(page, root))]
 
 	visited = {root: None}
 	def do_menu(pg, level):
-		#print "pg, has_key:", pg, _childs.has_key(pg)
-		if _childs.has_key(pg):
-			for p in _childs[pg]:
-				subpage = p[1]
+		#print "pg:", pg
+		#, _childs.has_key(pg.linktitle)
+		if _childs.has_key(pg.linktitle):
+			for p in _childs[pg.linktitle]:
+				subpage = get_file_for(p[1])
 
-				#print "subpage:", subpage, "in bread:", in_bread, "go deeper:", go_deeper
+				#print "subpage:", subpage
 				link = get_link_from(page, subpage)
 				res.append((level, subpage, link))
 				visited[subpage] = None
 				do_menu(subpage, level+1)
 
-	do_menu(root, 1)
-	#print visited
-	for f in files:
-		#print f
-		file = files[f]
-		try:
-			if file.linktitle in visited:
-				#print "found", file.linktitle
+	do_menu(root, level)
+
+	#print "visited:", visited
+	if show_orphans:
+		for f in files:
+			#print f
+			file = files[f]
+			if not file.has_key("linktitle"):
 				continue
-		except KeyError:
-			continue
-		#print "not found:", file.linktitle
-		res.append( (0, file.title, get_link_from(page, file.linktitle)))
+			try:
+				if file in visited:
+					#print "found", file.linktitle
+					continue
+			except KeyError:
+				continue
+			#print "not found:", file.linktitle
+			res.append( (0, file, get_link_from(page, file.linktitle)))
 	#for t in res: print t
 	return res
 
 
 @set_function("get_recently")
-def get_recently(file):
-	#file = get_current_file()
-	#print "XXXXXX:", file.linktitle
-	pg = []
+def get_recently(page=None, max_items=10):
+	if page is None:
+		page = get_current_file()
+	elif not isinstance(page, webber.File):
+		page = get_file_for(page)
 
-	max_n = 10	# TODO: configurable?
-	orig_page = file.linktitle
+	res = []
+	orig_page = page
 
-	def addPage(pg, title):
-		#print "addPage", title
-		for f in files:
-			file = files[f]
-			#print file
-			if file.has_key("linktitle") and file.linktitle == title:
-				pg.append( (file.mtime, file.ctime, file.title, get_link_from(orig_page, file.linktitle)) )
-				if _childs.has_key(file.linktitle):
-					for c in _childs[file.linktitle]:
-						#print "c:", c
-						addPage(pg, c[1])
-						if len(pg) == max_n:
-							return
-	addPage(pg, orig_page)
-	pg.sort(reverse=True)
-	#for p in pg: print p
-	return pg
-
-
-	
-	
-
-if __name__ == "__main__":
-	# You can call this test-code this way:
-	#
-	#	PYTHONPATH=`pwd` python plugins/hierarchy.py
-	#
-	memorize_parent("Impressum", "Home", 99999)
-	memorize_parent("Beruf", "Home", 100)
-	memorize_parent("Werdegang", "Beruf", 100)
-	memorize_parent("Kenntnisse", "Beruf", 200)
-	scan_done(None)
-	
-	#print get_breadcrumbs("Home")
-	#print get_breadcrumbs("Beruf")
-	#print get_breadcrumbs("Werdegang")
-	#print get_breadcrumbs("Kenntnisse")
-	#for t in get_sidemenu("Home"): print t
-	#for t in get_sidemenu("Beruf"): print t
-	#for t in get_sidemenu("Kenntnisse"): print t
-	for t in get_sitemap("Home"): print t
+	def addPage(res, page):
+		res.append( (page, get_link_from(orig_page, page)) )
+		if _childs.has_key(page.linktitle):
+			for c in _childs[page.linktitle]:
+				if len(res) < max_items:
+					addPage(res, get_file_for(c[1]))
+	addPage(res, orig_page)
+	res.sort(cmp = lambda x,y: x[0].mtime < y[0].mtime)
+	#for p in res: print p
+	return res

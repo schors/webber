@@ -11,7 +11,7 @@ You can call functions only from [[template_mako]]. An example:
 Here's list of functions defined by webber and it's default plugins:
 
 
-== format_date ==
+== format_date(timestamp) ==
 
 Takes a timestamp (seconds since 1st January 1970) and converts it into
 a string, using to `cfg.date_format`.
@@ -19,48 +19,57 @@ a string, using to `cfg.date_format`.
 Defined in `webber.py`.
 
 
-== get_time ==
+== get_time() ==
 
 Returns the current date/time as a string according to `cfg.date_format`.
 
 Defined in `webber.py`.
 
 
-== get_breadcrumbs ==
+== get_breadcrumbs() ==
 
-Returns the breadcrumbs as "`(linktitle, link)`" tuples.
+Returns the breadcrumbs as "`(page, link)`" tuples, where "`page`" is a "`class
+File`"-object and link is a relative link from the current page to "`page`".
 
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
 
-== get_current_file ==
+== get_current_file() ==
 
-Returns the current `class File` object.
+Returns the current "`class File`" object.
 
 Defined in `webber.py`.
 
 
-== get_recently ==
+== get_recently(page) ==
 
-Returns a list of up to 10 pages below the current page. For each
-page, you'll get a "`(mtime, ctime, title, link)`" tuple back.
+Returns a list of up to 10 pages below the specified page. If you don't
+specify a page, the current page will be used. For each page, you'll get a
+"`(page, link)`" tuple back, where "`page`" is a "`class File`"-object and
+link is a relative link from the current page to "`page`".
 
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
 
 == get_sidemenu(root) ==
 
-Returns a menu for the current page. For each page in this menu you'll
-get back a "`(level, part_of_path, is_current, title, link)`" tuple.
+Returns a menu for the current page. For each page in this menu you'll get
+back a "`(level, part_of_path, is_current, page, link)`" tuple, where
+"`page`" is a "`class File`"-object and link is a relative link from the
+current page to "`page`".
+
+You'll need to specify "`root`" if your top-most page isn't named "`Home`".
 
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
 
-== get_sitemap(home, show_orphans) ==
+== get_sitemap(root, show_orphans) ==
 
-Returns all pages as "`(level, title, link)`" tuples.
+Returns all pages as "`(level, page, link)`" tuples, where "`page`" is a
+"`class File`"-object and link is a relative link from the current page to
+"`page`".
 
-You'll need to specify "`root`" if your top-most page is a different one.
+You'll need to specify "`root`" if your top-most page isn't named "`Home`".
 
 To put pages into the sitemap that are outside the parent/child relationships,
 specify "`True`" for "`show_orphans`".

@@ -77,23 +77,23 @@ page itself.
 
 = Generation of breadcrumbs =
 
-This is done via a suitable [[template_mako]]. The
-template uses the function "`get_breadcrumbs(linktitle)`" and returns
-(linktitle, link) tuples. As a bonus: all the links are always relative to
-the calling page.
+This is done via a suitable [[template_mako]]. The template uses the
+function "`get_breadcrumbs()`" and returns (linktitle, link) tuples. As a
+bonus: all the links are always relative to the calling page.
 
 Here's a sample Mako template excerpt:
 
 	<ul>\
-	% for linktitle, link in get_breadcrumbs(file.linktitle):
-	<li><a href="${link}">${linktitle}</a></li>\
+	% for page, link in get_breadcrumbs():
+	<li><a href="${link}">${page.linktitle}</a></li>\
 	% endfor
 	</ul>\
+
 
 = Generation of a side-menu =
 
 This again is done via a suitable [[template_mako]]. The
-template uses the function "`get_sidemenu(linktitle)`" and returns (level,
+template uses the function "`get_sidemenu()`" and returns (level,
 part_of_path, is_current, title, link) tuples. Again all links are relative
 to the calling page.
 
@@ -108,12 +108,12 @@ to the calling page.
 Here's a sample Mako template excerpt that converts this into a HTML menu:
 
 	<ul id="sidebar">
-	% for level, part_of_path, current, title, link in get_sidemenu(file.linktitle):
+	% for level, part_of_path, current, page, link in get_sidemenu():
 	<li class="sidebar${level}"\
 	%    if current:
-	 id="sidebar_current">${title | entity}</li>
+	 id="sidebar_current">${page.linktitle | entity}</li>
 	%    else:
-	><a href="${link}">${title | entity}</a></li>
+	><a href="${link}">${page.linktitle | entity}</a></li>
 	%    endif
 	% endfor
 	</ul>
@@ -123,16 +123,16 @@ Here's a sample Mako template excerpt that converts this into a HTML menu:
 To get a list of recently changed pages, do this:
 
 	<%
-	  history = get_recently(get_current_file())
+	  history = get_recently())
 	%>
 	% if len(history)>1:
 	<h2>Recent changed</h2>
-	%   for mtime,ctime,title,link in history:
-	%     if mtime > ctime:
-	        Modified ${format_date(mtime)}\
+	%   for page, link in history:
+	%     if page.mtime > page.ctime:
+	        Modified ${format_date(page.mtime)}\
 	%     else:
-	        Created ${format_date(ctime)}\
+	        Created ${format_date(page.ctime)}\
 	%     endif
-	: <a href="${link}">${title | entity}</a><br />
+	: <a href="${link}">${page.title | entity}</a><br />
 	%   endfor
 	% endif
