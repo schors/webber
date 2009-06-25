@@ -519,6 +519,13 @@ def walk_tree(dirpath):
 				if ok:
 					#print "FILE", s
 					rel_path = relpath(cfg.in_dir, full_path)
+					# Allow paths to be specified in exclude_files:
+					for e in cfg.exclude_files:
+						if fnmatch.fnmatch(rel_path, e):
+							log("ignoring file %s" % rel_path, level=7)
+							ok = False
+							break
+				if ok:
 					log("reading file %s" % rel_path, level=5)
 					file = File(
 						path = full_path,
