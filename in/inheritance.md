@@ -1,7 +1,7 @@
 title: Configuration inheritance
 linktitle: Inheritance
 parent: Webber
-ctime: 2009-06-26
+ctime: 2009-06-24
 
 = Overview =
 

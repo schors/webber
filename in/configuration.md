@@ -1,6 +1,6 @@
 title: Configuration
 parent: Webber
-ctime: 2009-06-26
+ctime: 2009-06-24
 
 Configuration happens either the [[commandline]] or
 via the configuration file (described below). All Configurations are
