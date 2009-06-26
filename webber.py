@@ -107,6 +107,11 @@ class File(Holder):
 				continue
 			#print "txt:", s.rstrip().encode("iso-8859-1")
 			txt.append(s)
+
+		if self.mtime < self.ctime:
+			log('%s: modification time cannot be before creation time' % self.rel_path)
+			self.ctime = self.mtime
+
 		self.contents = "".join(txt)
 
 
