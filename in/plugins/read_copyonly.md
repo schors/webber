@@ -1,5 +1,5 @@
 title: Read and copy binary files
-linktitle: Read binaries
+linktitle: read_copyonly.py
 parent: Plugins
 ctime: 2009-06-26
 

@@ -1,4 +1,5 @@
 title: Read Markdown
+linktitle: read_markdown.py
 parent: Plugins
 ctime: 2009-06-26
 

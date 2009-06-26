@@ -1,4 +1,5 @@
 title: Read RST
+linktitle: read_rst.py
 parent: Plugins
 ctime: 2009-06-26
 

@@ -1,5 +1,5 @@
 title: Sample plugin skeleton
-linktitly: Skeleton
+linktitle: skeleton.py
 parent: Plugins
 ctime: 2009-06-26
 

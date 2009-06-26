@@ -1,5 +1,5 @@
 title: Create HTML links
-linktitle: Linkify
+linktitle: link.py
 parent: Plugins
 ctime: 2009-06-26
 

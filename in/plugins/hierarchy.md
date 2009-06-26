@@ -1,5 +1,5 @@
 title: Generate hierarchy
-linktitly: Hierarchy
+linktitle: hierarchy.py
 parent: Plugins
 ctime: 2009-06-26
 

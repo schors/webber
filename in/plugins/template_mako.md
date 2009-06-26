@@ -1,5 +1,5 @@
 title: Web page template
-linktitly: HTML Template
+linktitle: template_mako.py
 parent: Plugins
 ctime: 2009-06-26
 
