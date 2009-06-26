@@ -108,9 +108,14 @@ class File(Holder):
 			#print "txt:", s.rstrip().encode("iso-8859-1")
 			txt.append(s)
 
+		# Warn about a bogus time entries
 		if self.mtime < self.ctime:
 			log('%s: modification time cannot be before creation time' % self.rel_path)
 			self.ctime = self.mtime
+
+		# Warn about long titles / long linktitles
+		if len(self.linktitle) > 20:
+			log('%s: define a shorter "linktitle: xxx"')
 
 		self.contents = "".join(txt)
 
@@ -501,7 +506,7 @@ def walk_tree(dirpath):
 		direc.inheritFrom(cfg)
 
 		if not rel_path: rel_path = "."
-		log("reading directory %s" % rel_path, level=4)
+		log("reading directory %s" % rel_path, level=5)
 
 		for s in os.listdir(dirpath):
 			full_path = os.path.join(dirpath, s)
