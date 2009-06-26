@@ -129,3 +129,35 @@ Anything you specify here will be accessible in the template as ${keywords}.
 You can use this for HTML meta information, see [[template_make]].
 
 If you don't specify a description, then ${keywords} will be the empty string.
+
+
+== main_url ==
+
+Used by [[google_sitemap]]:
+
+Internally, [[Webber]] works with relative URLs and is quite agonistic about
+the final website. However, the [[google_sitemap]] plugin needs absolute URLs,
+complete with host name. So we need this configuration ...
+
+Used by [[google_sitemap]]:
+
+
+== sitemap_priority ==
+
+Used by [[google_sitemap]] to specify a relative important-ness of a page.
+Should be between "`0.0`" and "`1.0`" (including).
+
+
+== sitemap_changefreq ==
+
+Used by [[google_sitemap]] as an estimate about how often a page might change.
+
+Should be one of the following values:
+
+* always
+* hourly
+* daily
+* weekly
+* monthly
+* yearly
+* never
