@@ -26,7 +26,6 @@ def do_link(m):
 	link = m.group(2).replace("\n", " ")
 	anchor = m.group(3) or ""
 	if link.find(".") == -1:
-		#link = link.tolower()
 		for f in files:
 			file = files[f]
 			if not file.has_key("linktitle"):
@@ -40,6 +39,8 @@ def do_link(m):
 				link = get_link_from(get_current_file().linktitle, file.linktitle)
 				#print "LINK: '%s' '%s'" % (text, link)
 				break
+	if not text:
+		text = link
 	# TODO: validate link
 	return '<a href="%s%s">%s</a>' % (link, anchor, text)
 
