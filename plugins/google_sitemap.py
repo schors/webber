@@ -59,7 +59,7 @@ def sitemap_scan(params):
 	f.write('   <loc>http://%s/%s</loc>\n' % (file.main_url, file.rel_path))
 	f.write('   <lastmod>%s</lastmod>\n' % time.strftime( "%Y-%m-%d", time.localtime(file.mtime)) )
 	f.write('   <changefreq>%s</changefreq>\n' % file.sitemap_changefreq)
-	f.write('   <priority>%s</changefreq>\n' % file.sitemap_priority)
+	f.write('   <priority>%s</priority>\n' % file.sitemap_priority)
 	f.write('</url>\n')
 
 
