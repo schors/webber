@@ -142,7 +142,9 @@ def finish(params):
 
 
 
-# TODO: Description missing
+#
+# This is a sample macro. Macros are called with [!name].
+#
 @set_macro("sample")
 def sample_macro(params):
 	if cfg.test_verbose:
@@ -151,7 +153,9 @@ def sample_macro(params):
 
 
 
-# TODO: Description missing
+#
+# This is a sample function. Functions are called with ${name(args)}.
+#
 @set_function("func")
 def sample_func():
 	if cfg.test_verbose:
