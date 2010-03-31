@@ -63,6 +63,7 @@ class File(Holder):
 		Holder.__init__(self, **kw)
 		files[kw["rel_path"]] = self
 		self.render = None
+		self.contents = None
 		mtime = os.stat(self.path)[stat.ST_MTIME]
 		self.mtime = mtime
 		self.ctime = mtime
@@ -80,7 +81,7 @@ class File(Holder):
 			if read_keywords:
 				s = s.strip()
 				#print "kwd:", s
-				if s==terminate_line:
+				if s == terminate_line:
 					read_keywords = False
 					continue
 
@@ -261,7 +262,7 @@ def get_program_directory():
 #	5... Debug
 #
 def log(s, level=4):
-	if level>4:
+	if level > 4:
 		indent = " " * (level-4)
 	else:
 		indent = ""
@@ -434,7 +435,7 @@ def iso_to_time(val):
 		try:
 			t = time.strptime(val, "%Y-%m-%d")
 		except ValueError:
-			warning("%s: wrong ISO format in '%s'" % (self.rel_path, s))
+			warning("wrong ISO format in '%s'" % val)
 	return int(time.mktime(t))
 
 @set_function("format_date")
@@ -608,11 +609,13 @@ def scan_files():
 
 	for s in files:
 		file = files[s]
-		try:
-			# Just check if the file has contents
-			contents = file.contents
-		except:
+		if not file.has_key("contents"):
 			continue
+#		try:
+#			# Just check if the file has contents
+#			contents = file.contents
+#		except:
+#			continue
 
 		direc = directories[file.direc]
 
