@@ -37,7 +37,7 @@ def checkconfig(params):
 # param is empty
 #
 @set_hook("start")
-def finish(params):
+def start(params):
 	if cfg.test_verbose:
 		print "in skeleton.start"
 
