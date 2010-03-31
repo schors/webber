@@ -5,6 +5,13 @@ all: webber.conf
 profile:
 	./webber --profile
 
+lint:
+	pylint \
+		--include-ids=y \
+		--reports=n \
+		--disable-msg=W0312,C0103 \
+		webber.py plugins
+
 clean:
 	rm -f *.pyc plugins/*.pyc
 
