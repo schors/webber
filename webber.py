@@ -116,7 +116,7 @@ class File(Holder):
 
 		# Warn about long titles / long linktitles
 		if len(self.linktitle) > 20:
-			log('%s: define a shorter "linktitle: xxx"')
+			log('%s: define a shorter linktitle' % self.rel_path)
 
 		self.contents = "".join(txt)
 
