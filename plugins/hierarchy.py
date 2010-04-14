@@ -179,8 +179,7 @@ def get_recently(page=None, max_items=10):
 		res.append( (page, get_link_from(orig_page, page)) )
 		if _childs.has_key(page.linktitle):
 			for c in _childs[page.linktitle]:
-				if len(res) < max_items:
-					addPage(res, get_file_for(c[1]))
+				addPage(res, get_file_for(c[1]))
 	addPage(res, orig_page)
 	res.sort(cmp = lambda x,y: cmp(y[0].mtime, x[0].mtime))
-	return res
+	return res[:max_items]
