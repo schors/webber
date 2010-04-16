@@ -5,7 +5,7 @@ from webber import *
 # Copyright (c) 2007-2008 ActiveState Corp.
 # License: MIT (http://www.opensource.org/licenses/mit-license.php)
 #
-# I used version 1.0.1.12, but deleted:
+# I used version 1.0.1.13, but deleted:
 #	* file-vars (emacs-style settings inside the file)
 #	* Standardize line endings
 #	* call to _do_links()
@@ -647,7 +647,7 @@ class Markdown(object):
         Markdown.pl because of the lack of atomic matching support in
         Python's regex engine used in $g_nested_brackets.
         """
-        MAX_LINK_TEXT_SENTINEL = 300
+        MAX_LINK_TEXT_SENTINEL = 3000  # markdown2 issue 24
 
         # `anchor_allowed_pos` is used to support img links inside
         # anchors, but not anchors inside anchors. An anchor's start
@@ -1544,7 +1544,8 @@ def _xml_encode_email_char_at_random(ch):
     r = random()
     # Roughly 10% raw, 45% hex, 45% dec.
     # '@' *must* be encoded. I [John Gruber] insist.
-    if r > 0.9 and ch != "@":
+    # Issue 26: '_' must be encoded.
+    if r > 0.9 and ch not in "@_":
         return ch
     elif r < 0.45:
         # The [1:] is to drop leading '0': 0x63 -> x63
