@@ -125,7 +125,7 @@ _get_file_for_cache = {}
 def get_file_for(name):
 	"""webber.files is an hash of File objects, but keyed on the real file name.
 	This function returns a File object for a specific linktitle."""
-	
+
 	try:
 		return _get_file_for_cache[name]
 	except:
@@ -313,7 +313,7 @@ def info(s):
 # At startup:
 #	addoptions           allow plugins to add command-line options
 #	checkconfig          check configuration
-#	start                
+#	start
 # While reading files:
 #	read                 ask any reader (plugins!) to read the file
 #	filter               ask anybody to filter the contents
@@ -548,7 +548,7 @@ def walk_tree(dirpath):
 					)
 					file.inheritFrom(direc)
 					read_file(direc, file)
-						
+
 	walk(dirpath)
 
 
@@ -605,7 +605,7 @@ def run_macros(file, contents):
 	s = reMacro.sub(do_macro, contents)
 	#print s
 	return s
-	
+
 
 def scan_files():
 	info("Scanning files ...")
@@ -745,7 +745,7 @@ def addoptions(params):
 
 	return parser
 
-	
+
 @set_hook("checkconfig", last=True)
 def checkconfig(params):
 	# Ensure absolute paths that end in '/'.
