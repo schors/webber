@@ -11,7 +11,7 @@ from webber import *
 #	* call to _do_links()
 #	* logging
 #	* allow "= Header =" in addition to "# Header #"
-#	
+#
 
 import os, sys, re, codecs
 try:
@@ -98,7 +98,7 @@ class Markdown(object):
         self.tab_width = tab_width
 
         # For compatibility with earlier markdown2.py and with
-        # markdown.py's safe_mode being a boolean, 
+        # markdown.py's safe_mode being a boolean,
         #   safe_mode == True -> "replace"
         if safe_mode is True:
             self.safe_mode = "replace"
@@ -286,7 +286,7 @@ class Markdown(object):
         text = self._liberal_tag_block_re.sub(hash_html_block_sub, text)
 
         # Special case just for <hr />. It was easier to make a special
-        # case than to make the other regex more complicated.   
+        # case than to make the other regex more complicated.
         if "<hr" in text:
             _hr_tag_re = _hr_tag_re_from_tab_width(self.tab_width)
             text = _hr_tag_re.sub(hash_html_block_sub, text)
@@ -349,7 +349,7 @@ class Markdown(object):
         if "xml" in self.extras:
             # Treat XML processing instructions and namespaced one-liner
             # tags as if they were block HTML tags. E.g., if standalone
-            # (i.e. are their own paragraph), the following do not get 
+            # (i.e. are their own paragraph), the following do not get
             # wrapped in a <p> tag:
             #    <?foo bar?>
             #
@@ -363,7 +363,7 @@ class Markdown(object):
         # Strips link definitions from text, stores the URLs and titles in
         # hash references.
         less_than_tab = self.tab_width - 1
-    
+
         # Link defs are in the form:
         #   [id]: url "optional title"
         _link_def_re = re.compile(r"""
@@ -414,7 +414,7 @@ class Markdown(object):
         - The 'note-id' can be pretty much anything, though typically it
           is the number of the footnote.
         - The first paragraph may start on the next line, like so:
-            
+
             [^note-id]:
                 Text of the note.
         """
@@ -481,7 +481,7 @@ class Markdown(object):
              + indent + ('\n'+indent).join(lines)
              + '\n\n')
         return s
-        
+
     def _prepare_pyshell_blocks(self, text):
         """Ensure that Python interactive shell sessions are put in
         code blocks -- even if not properly indented.
@@ -501,14 +501,14 @@ class Markdown(object):
     def _run_span_gamut(self, text):
         # These are all the transformations that occur *within* block-level
         # tags like paragraphs, headers, and list items.
-    
+
         text = self._do_code_spans(text)
-    
+
         text = self._escape_special_chars(text)
-    
+
         # Process anchor and image tags.
         #text = self._do_links(text)
-    
+
         # Make links out of things like `<http://example.com/>`
         # Must come after _do_links(), because you can use < and >
         # delimiters in inline links like [this](<url>).
@@ -516,21 +516,21 @@ class Markdown(object):
 
         if "link-patterns" in self.extras:
             text = self._do_link_patterns(text)
-    
+
         text = self._encode_amps_and_angles(text)
-    
+
         text = self._do_italics_and_bold(text)
-    
+
         # Do hard breaks:
         text = re.sub(r" {2,}\n", " <br%s\n" % self.empty_element_suffix, text)
-    
+
         return text
 
     # "Sorta" because auto-links are identified as "tag" tokens.
     _sorta_html_tokenize_re = re.compile(r"""
         (
             # tag
-            </?         
+            </?
             (?:\w+)                                     # tag name
             (?:\s+(?:[\w-]+:)?[\w-]+=(?:".*?"|'.*?'))*  # attributes
             \s*/?>
@@ -543,7 +543,7 @@ class Markdown(object):
             <\?.*?\?>       # processing instruction
         )
         """, re.X)
-    
+
     def _escape_special_chars(self, text):
         # Python markdown note: the HTML tokenization here differs from
         # that in Markdown.pl, hence the behaviour for subtle cases can
@@ -683,7 +683,7 @@ class Markdown(object):
             # matching brackets in img alt text -- we'll differ in that
             # regard.
             bracket_depth = 0
-            for p in range(start_idx+1, min(start_idx+MAX_LINK_TEXT_SENTINEL, 
+            for p in range(start_idx+1, min(start_idx+MAX_LINK_TEXT_SENTINEL,
                                             text_length)):
                 ch = text[p]
                 if ch == ']':
@@ -811,7 +811,7 @@ class Markdown(object):
             # Otherwise, it isn't markup.
             curr_pos = start_idx + 1
 
-        return text 
+        return text
 
 
     _setext_h_re = re.compile(r'^(.+)[ \t]*\n(=+|-+)[ \t]*\n+', re.M)
@@ -844,7 +844,7 @@ class Markdown(object):
         # Setext-style headers:
         #     Header 1
         #     ========
-        #  
+        #
         #     Header 2
         #     --------
         text = self._setext_h_re.sub(self._setext_h_sub, text)
@@ -900,7 +900,7 @@ class Markdown(object):
                   )
                 )
             ''' % (less_than_tab, marker_pat, marker_pat)
-        
+
             # We use a different prefix before nested lists than top-level lists.
             # See extended comment in _process_list_items().
             #
@@ -928,7 +928,7 @@ class Markdown(object):
                 text = list_re.sub(self._list_sub, text)
 
         return text
-    
+
     _list_item_re = re.compile(r'''
         (\n)?               # leading line = \1
         (^[ \t]*)           # leading whitespace = \2
@@ -958,7 +958,7 @@ class Markdown(object):
     def _process_list_items(self, list_str):
         # Process the contents of a single ordered or unordered list,
         # splitting it into individual list items.
-    
+
         # The $g_list_level global keeps track of when we're inside a list.
         # Each time we enter a list, we increment it; when we leave a list,
         # we decrement. If it's zero, we're not in a list anymore.
@@ -1007,7 +1007,7 @@ class Markdown(object):
                 """
                 yield 0, "<code>"
                 for tup in inner:
-                    yield tup 
+                    yield tup
                 yield 0, "</code>"
 
             def wrap(self, source, outfile):
@@ -1080,26 +1080,26 @@ class Markdown(object):
 
     def _do_code_spans(self, text):
         #   *   Backtick quotes are used for <code></code> spans.
-        # 
+        #
         #   *   You can use multiple backticks as the delimiters if you want to
         #       include literal backticks in the code span. So, this input:
-        #     
+        #
         #         Just type ``foo `bar` baz`` at the prompt.
-        #     
+        #
         #       Will translate to:
-        #     
+        #
         #         <p>Just type <code>foo `bar` baz</code> at the prompt.</p>
-        #     
+        #
         #       There's no arbitrary limit to the number of backticks you
         #       can use as delimters. If you need three consecutive backticks
         #       in your code, use four for delimiters, etc.
         #
         #   *   You can use spaces to get literal backticks at the edges:
-        #     
+        #
         #         ... type `` `bar` `` ...
-        #     
+        #
         #       Turns to:
-        #     
+        #
         #         ... type <code>`bar`</code> ...
         return self._code_span_re.sub(self._code_span_sub, text)
 
@@ -1141,7 +1141,7 @@ class Markdown(object):
             text = self._strong_re.sub(r"<strong>\2</strong>", text)
             text = self._em_re.sub(r"<em>\2</em>", text)
         return text
-    
+
 
     _block_quote_re = re.compile(r'''
         (                           # Wrap whole match in \1
@@ -1231,7 +1231,7 @@ class Markdown(object):
         # Smart processing for ampersands and angle brackets that need
         # to be encoded.
         text = self._ampersand_re.sub('&amp;', text)
-    
+
         # Encode naked <'s
         text = self._naked_lt_re.sub('&lt;', text)
 
@@ -1289,7 +1289,7 @@ class Markdown(object):
         addr = '<a href="%s">%s</a>' \
                % (''.join(chars), ''.join(chars[7:]))
         return addr
-    
+
     def _do_link_patterns(self, text):
         """Caveat emptor: there isn't much guarding against link
         patterns being formed inside other standard Markdown links, e.g.
@@ -1320,7 +1320,7 @@ class Markdown(object):
         for hash, link in link_from_hash.items():
             text = text.replace(hash, link)
         return text
-    
+
     def _unescape_special_chars(self, text):
         # Swap back in all the special characters we've hidden.
         for ch, hash in g_escape_table.items():
@@ -1390,18 +1390,18 @@ def _regex_from_encoded_pattern(s):
 # Recipe: dedent (0.1.2)
 def _dedentlines(lines, tabsize=8, skip_first_line=False):
     """_dedentlines(lines, tabsize=8, skip_first_line=False) -> dedented lines
-    
+
         "lines" is a list of lines to dedent.
         "tabsize" is the tab width to use for indent width calculations.
         "skip_first_line" is a boolean indicating if the first line should
             be skipped for calculating the indent width and for dedenting.
             This is sometimes useful for docstrings and similar.
-    
+
     Same as dedent() except operates on a sequence of lines. Note: the
     lines list is modified **in-place**.
     """
     DEBUG = False
-    if DEBUG: 
+    if DEBUG:
         print "dedent: dedent(..., tabsize=%d, skip_first_line=%r)"\
               % (tabsize, skip_first_line)
     indents = []
@@ -1466,7 +1466,7 @@ def _dedent(text, tabsize=8, skip_first_line=False):
         "skip_first_line" is a boolean indicating if the first line should
             be skipped for calculating the indent width and for dedenting.
             This is sometimes useful for docstrings and similar.
-    
+
     textwrap.dedent(s), but don't expand tabs to spaces
     """
     lines = text.splitlines(1)
@@ -1531,7 +1531,7 @@ def _hr_tag_re_from_tab_width(tab_width):
             [ ]{0,%d}
             <(hr)               # start tag = \2
             \b                  # word break
-            ([^<>])*?           # 
+            ([^<>])*?           #
             /?>                 # the matching end tag
             [ \t]*
             (?=\n{2,}|\Z)       # followed by a blank line or end of document
