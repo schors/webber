@@ -12,7 +12,7 @@ to plugins. Those plugins do:
 * Update internal state or modify HTML snippets
   ([[hierarchy.py|hierarchy]], [[link.py|link]])
 * Create HTML pages ([[template_mako.py|template_mako]])
-* Create additional output files ([[google_sitemap.py||Google Sitemap generation]])
+* Create additional output files ([[google_sitemap.py|google_sitemap]])
 
 There's another plugin there ([[skeleton.py|skeleton]]), which is
 is just a demo for plugin-programmers.
