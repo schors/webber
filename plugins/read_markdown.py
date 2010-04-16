@@ -5,7 +5,7 @@ from webber import *
 # Copyright (c) 2007-2008 ActiveState Corp.
 # License: MIT (http://www.opensource.org/licenses/mit-license.php)
 #
-# I used version 1.0.1.13, but deleted:
+# I used version 1.0.1.14, but deleted:
 #	* file-vars (emacs-style settings inside the file)
 #	* Standardize line endings
 #	* call to _do_links()
@@ -18,7 +18,7 @@ try:
     from hashlib import md5
 except ImportError:
     from md5 import md5
-from random import random
+from random import random, randint
 
 
 
@@ -42,14 +42,22 @@ DEBUG = False
 
 DEFAULT_TAB_WIDTH = 4
 
-# Table of hash values for escaped characters:
-def _escape_hash(s):
-    # Lame attempt to avoid possible collision with someone actually
-    # using the MD5 hexdigest of one of these chars in there text.
-    # Other ideas: random.random(), uuid.uuid()
+
+try:
+    import uuid
+except ImportError:
+    SECRET_SALT = str(randint(0, 1000000))
+else:
+    SECRET_SALT = str(uuid.uuid4())
+def _hash_ascii(s):
     #return md5(s).hexdigest()   # Markdown.pl effectively does this.
-    return 'md5-'+md5(s).hexdigest()
-g_escape_table = dict([(ch, _escape_hash(ch)) for ch in '\\`*_{}[]()>#+-.!'])
+    return 'md5-' + md5(SECRET_SALT + s).hexdigest()
+def _hash_text(s):
+    return 'md5-' + md5(SECRET_SALT + s.encode("utf-8")).hexdigest()
+
+# Table of hash values for escaped characters:
+g_escape_table = dict([(ch, _hash_ascii(ch))
+                       for ch in '\\`*_{}[]()>#+-.!'])
 
 
 
@@ -179,10 +187,10 @@ class Markdown(object):
 
         text = self._run_block_gamut(text)
 
-        text = self._unescape_special_chars(text)
-
         if "footnotes" in self.extras:
             text = self._add_footnotes(text)
+
+        text = self._unescape_special_chars(text)
 
         if self.safe_mode:
             text = self._unhash_html_spans(text)
@@ -1314,7 +1322,7 @@ class Markdown(object):
                         .replace('*', g_escape_table['*'])
                         .replace('_', g_escape_table['_']))
                 link = '<a href="%s">%s</a>' % (escaped_href, text[start:end])
-                hash = md5(link).hexdigest()
+                hash = _hash_text(link)
                 link_from_hash[hash] = link
                 text = text[:start] + hash + text[end:]
         for hash, link in link_from_hash.items():
@@ -1553,8 +1561,6 @@ def _xml_encode_email_char_at_random(ch):
     else:
         return '&#%s;' % ord(ch)
 
-def _hash_text(text):
-    return 'md5:'+md5(text.encode("utf-8")).hexdigest()
 
 
 
