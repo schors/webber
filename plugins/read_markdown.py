@@ -5,7 +5,7 @@ from webber import *
 # Copyright (c) 2007-2008 ActiveState Corp.
 # License: MIT (http://www.opensource.org/licenses/mit-license.php)
 #
-# I used version 1.0.1.14, but deleted:
+# I used version 1.0.1.15, but deleted:
 #	* file-vars (emacs-style settings inside the file)
 #	* Standardize line endings
 #	* call to _do_links()
@@ -751,7 +751,8 @@ class Markdown(object):
                         title_str = ''
                     if is_img:
                         result = '<img src="%s" alt="%s"%s%s' \
-                            % (url, link_text.replace('"', '&quot;'),
+                            % (url.replace('"', '&quot;'),
+                               link_text.replace('"', '&quot;'),
                                title_str, self.empty_element_suffix)
                         curr_pos = start_idx + len(result)
                         text = text[:start_idx] + result + text[match.end():]
@@ -794,7 +795,8 @@ class Markdown(object):
                             title_str = ''
                         if is_img:
                             result = '<img src="%s" alt="%s"%s%s' \
-                                % (url, link_text.replace('"', '&quot;'),
+                                % (url.replace('"', '&quot;'),
+                                   link_text.replace('"', '&quot;'),
                                    title_str, self.empty_element_suffix)
                             curr_pos = start_idx + len(result)
                             text = text[:start_idx] + result + text[match.end():]
