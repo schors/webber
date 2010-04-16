@@ -339,11 +339,11 @@ def load_plugins():
 	sys.path.append(os.path.join(get_program_directory(), "plugins"))
 	for s in cfg.plugins:
 		#print "import:", s
-		#try:
-		exec "import %s" % s
-		#except:
-		#	print "Could not import plugin '%s'" % s
-		#	sys.exit(1)
+		try:
+			exec "import %s" % s
+		except:
+			print "Could not import plugin '%s'" % s
+			sys.exit(1)
 
 
 def set_hook(name, last=False):
