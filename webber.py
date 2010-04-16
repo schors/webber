@@ -337,6 +337,9 @@ hooks = {}
 def load_plugins():
 	"""Loads all plugins in the plugins directory."""
 	sys.path.append(os.path.join(get_program_directory(), "plugins"))
+	if cfg.has_key("plugin_dirs"):
+		for s in cfg.plugin_dirs:
+			sys.path.append(s)
 	for s in cfg.plugins:
 		#print "import:", s
 		try:

@@ -27,6 +27,9 @@ Webber expects a `webber.conf` file in it's root directory. It should look like 
         	"read_markdown",
 	        "template_mako",
         	]
+	plugin_dirs: [
+		"my_plugins"
+		]
 	exclude_dir: [
 		"webber.conf",
 		"*.tmpl",
@@ -65,7 +68,12 @@ Encoding ('utf-8', 'iso-8859-1' etc) used when writing the final HTML pages.
 
 == plugins ==
 
-List of [[plugins]] to load.
+List of  to load.
+
+== plugin_dirs ==
+
+List of directories that should be search for [[plugins]]. Can be empty or
+completely omitted.
 
 == exclude_dirs ==
 

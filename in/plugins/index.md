@@ -17,10 +17,13 @@ to plugins. Those plugins do:
 There's another plugin there ([[skeleton.py|skeleton]]), which is
 is just a demo for plugin-programmers.
 
-Plugins simply reside in the "`plugins/`" directory. However, webber
-doesn't load all of them automatically. Instead you specify in the
-configuration file [[webber.conf|configuration]] which
-plugins you want.
+Plugins simply reside in the "`plugins/`" directory from webber itself. If your
+web project needs local plugins, you can specifiy additional plugins with
+"`plugin_dirs`" in [[webber.conf|configuration]].
+
+Note that webber doesn't load all of them automatically. Instead you specify
+in the configuration file [[webber.conf|configuration]] which plugins you
+want. Use the variable "`plugins`" for that.
 
 Once plugins are loaded, webber orchestrates the work of itself and
 all plugins via [[hooks]].
