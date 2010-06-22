@@ -622,6 +622,10 @@ def scan_files():
 
 		direc = directories[file.direc]
 
+		# Output-Filename "berechnen"
+		if file.render and file.render == "html":
+			file.out_path = os.path.splitext(s)[0] + ".html"
+
 		run_hooks("scan",
 			direc=direc,
 			file=file)
@@ -666,9 +670,6 @@ def render_files():
 		if not contents:
 			continue
 		file.contents = contents
-
-		# Output-Filename "berechnen"
-		file.out_path = os.path.splitext(fname_in)[0] + ".html"
 
 	for fname_in in files:
 		file = files[fname_in]
