@@ -1,6 +1,11 @@
 # -*- coding: iso-8859-1 -*-
 from webber import *
-import os, datetime, PyRSS2Gen
+import os, datetime
+try:
+	import PyRSS2Gen
+except ImportError:
+	print "rss_feed needs the python module PyRSS2Gen"
+	raise
 
 items = []
 
