@@ -52,13 +52,20 @@ def sitemap_scan(params):
 		link = full_url,
 		guid = PyRSS2Gen.Guid("%s %s" % (full_url, file["mtime"]), isPermaLink=0),
 		description = change,
-		pubDate = datetime.datetime.fromtimestamp(file["mtime"], utc),
+		pubDate = file["mtime"]
 	)
 	items.append(item)
 
 
 @set_hook("finish")
 def finish(params):
+	# Sort items by pubDate, which still holds the mtime
+	items.sort(key=lambda i: i.pubDate, reverse=True)
+
+	# convert mtime to real pupDate
+	for i in items:
+		i.pubDate = datetime.datetime.fromtimestamp(i.pubDate, utc)
+
 	rss = PyRSS2Gen.RSS2(
 		title = cfg.subtitle,
 		link = "http://%s" % cfg.main_url,
