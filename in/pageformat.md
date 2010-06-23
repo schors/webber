@@ -1,6 +1,7 @@
 title: Page format
 parent: Webber
 ctime: 2009-06-26
+mtime: 2009-06-26
 
 Every page contains a header, then a blank line, and then the text that
 should show up in the web page.
@@ -24,7 +25,7 @@ by "`file.XXXX`" and you're free to invent your own keywords:
 	subtitle: What you should know about this web-site
 
 	Hi, I'm Mario and I won't tell you more about me :-)
-	
+
 Now you can access "`${file.subtitle}`" in your template and as
 "`params.file.subtitle`" in your own [[macros|macros]] or
 [[functions|functions]].
