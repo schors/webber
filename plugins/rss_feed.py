@@ -71,4 +71,8 @@ def finish(params):
 		os.makedirs(cfg.out_dir)
 	except:
 		pass
-	rss.write_xml( open(os.path.join(cfg.out_dir, cfg.rss_file), "w"))
+	f = open(os.path.join(cfg.out_dir, cfg.rss_file), "w")
+	# Ugly XML beautification
+	s = rss.to_xml().replace("<", "\n<").replace("\n\n", "\n")[1:]
+	f.write(s)
+	f.write("\n")
