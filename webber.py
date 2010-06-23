@@ -674,14 +674,13 @@ def render_files():
 			continue
 		direc = directories[file.direc]
 
-		contents = run_hooks("linkify",
+		run_hooks("linkify",
 			direc=direc,
 			file=file,
-			return_holder=False)
+			return_holder=True)
 		#print "contents after 'linkify':", contents
-		if not contents:
+		if not file.contents:
 			continue
-		file.contents = contents
 
 		# TODO: einige Fragmente sollen u.U. in eine andere
 		# Webseite eingebaut werden und sollten daher nicht in

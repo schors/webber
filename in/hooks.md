@@ -145,8 +145,12 @@ The first hook that returns HTML, no other hooks will be called.
 
 == linkify ==
 
-This hook should contain any link to html. Implemented by the plugin
-[[link]].
+Functions that are called by this hook receive a pre-rendered HTML page.
+They can now modify this HTML further, e.g. py converting links to HTML.
+
+They can directly modify params.file.contents and don't need to return anything.
+
+Implemented by the plugin [[link]] and [[toc]].
 
 * "`params.direc`" contains a "`class Directory`" object
 * "`params.file`" has a "`class File`" object

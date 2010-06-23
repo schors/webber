@@ -76,6 +76,11 @@ specify "`True`" for "`show_orphans`".
 
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
+== get_toc() ==
+
+Returns an unsorted list with the hierarchy of the table-of-contents.
+
+Defined in [[toc.py|toc]], where you find an example.
 
 == func ==
 

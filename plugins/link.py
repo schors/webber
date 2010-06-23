@@ -72,12 +72,7 @@ def test_sub():
 		res = reLink.sub(do_link, s)
 		print "", res
 
-#test_link()
-#test_sub()
-
-
-
 
 @set_hook("linkify")
 def linkify(params):
-	return reLink.sub(do_link, params.file.contents)
+	params.file.contents = reLink.sub(do_link, params.file.contents)
