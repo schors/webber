@@ -50,7 +50,7 @@ def sitemap_scan(params):
 	item = PyRSS2Gen.RSSItem(
 		title = file["title"],
 		link = full_url,
-		guid = PyRSS2Gen.Guid("%s %s" % (full_url, file["mtime"])),
+		guid = PyRSS2Gen.Guid("%s %s" % (full_url, file["mtime"]), isPermaLink=0),
 		description = change,
 		pubDate = datetime.datetime.fromtimestamp(file["mtime"], utc),
 	)
