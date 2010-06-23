@@ -1,6 +1,6 @@
 # -*- coding: iso-8859-1 -*-
 from webber import *
-import os, datetime
+import os, datetime, re
 try:
 	import PyRSS2Gen
 except ImportError:
@@ -76,8 +76,10 @@ def finish(params):
 		pass
 	f = open(os.path.join(cfg.out_dir, cfg.rss_file), "w")
 	# Ugly XML beautification
-	s = rss.to_xml().replace("<", "\n<").replace("\n\n", "\n")[1:]
+	s = rss.to_xml()
+	s = re.sub("<(?!/)", "\n<", s)
+	s = s.replace("\n\n", "\n")
 	# Step two of self-reference
 	s = s.replace('<channel>', '<channel>\n<atom:link href="http://%s/%s" rel="self" type="application/rss+xml" />' % (cfg.main_url, cfg.rss_file))
-	f.write(s)
+	f.write(s[1:])
 	f.write("\n")
