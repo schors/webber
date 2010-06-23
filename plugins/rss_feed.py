@@ -17,8 +17,8 @@ def checkconfig(params):
 		cfg.rss_file = "feed.rss"
 
 
+# Helper class needed for datetime.datetime to generate GMT timestamps
 ZERO = datetime.timedelta(0)
-
 class UTC(datetime.tzinfo):
     """UTC"""
 
@@ -57,20 +57,19 @@ def sitemap_scan(params):
 	items.append(item)
 
 
-
 @set_hook("finish")
 def finish(params):
 	rss = PyRSS2Gen.RSS2(
 		title = cfg.subtitle,
 		link = "http://%s" % cfg.main_url,
 		description = cfg.subtitle,
-		lastBuildDate = datetime.datetime.now(),
+		lastBuildDate = datetime.datetime.now(utc),
 		items = items,
 	)
 	# Step one of self-reference
 	# (see http://feedvalidator.org/docs/warning/MissingAtomSelfLink.html)
 	rss.rss_attrs["xmlns:atom"] = "http://www.w3.org/2005/Atom"
-	
+
 	try:
 		os.makedirs(cfg.out_dir)
 	except:
