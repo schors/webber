@@ -54,8 +54,7 @@ def sitemap_scan(params):
 	else:
 		change = ""
 
-	fname_out = os.path.join(cfg.out_dir, file.out_path)
-	full_url = "http://%s/%s" % (cfg.main_url, fname_out)
+	full_url = "http://%s/%s" % (cfg.main_url, file.out_path)
 	item = PyRSS2Gen.RSSItem(
 		title = file["title"],
 		link = full_url,
