@@ -40,8 +40,10 @@ def sitemap_scan(params):
 	file = params.file
 	if not file.has_key("linktitle"):
 		return
-	if not file.has_key("change"):
-		return
+	if file.has_key("change"):
+		change = file["change"]
+	else:
+		change = ""
 
 	fname_out = os.path.join(cfg.out_dir, file.out_path)
 	full_url = "http://%s/%s" % (cfg.main_url, fname_out)
@@ -49,7 +51,7 @@ def sitemap_scan(params):
 		title = file["title"],
 		link = full_url,
 		guid = PyRSS2Gen.Guid("%s %s" % (full_url, file["mtime"])),
-		description = file["change"],
+		description = change,
 		pubDate = datetime.datetime.fromtimestamp(file["mtime"], utc),
 	)
 	items.append(item)
