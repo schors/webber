@@ -3,8 +3,9 @@ linktitle: google_sitemap.py
 parent: Plugins
 keywords: Google, XML, Sitemap generator
 ctime: 2009-06-26
+mtime: 2009-06-26
 
-This plugins write an XML "`sitemap.xml`" file into the out-directory. The
+This plugins writes an XML file "`sitemap.xml`" into the out-directory. The
 format is documented at [[http://www.sitemaps.org]].
 
 
