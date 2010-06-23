@@ -8,6 +8,7 @@ except ImportError:
 	raise
 
 items = []
+max_age = 0
 
 
 @set_hook("checkconfig")
@@ -15,6 +16,10 @@ def checkconfig(params):
 	if not cfg.has_key("rss_file"):
 		log('no "rss_file:" configured, using "feed.rss":', 4)
 		cfg.rss_file = "feed.rss"
+	if cfg.has_key("rss_max_age_days"):
+		import time
+		global max_age
+		max_age = int(time.time()) - int(cfg.rss_max_age_days)*86400
 
 
 # Helper class needed for datetime.datetime to generate GMT timestamps
@@ -38,6 +43,8 @@ def sitemap_scan(params):
 	global items
 
 	file = params.file
+	if max_age and file["mtime"] < max_age:
+		return
 	if not file.has_key("linktitle"):
 		return
 	if file.has_key("change"):
