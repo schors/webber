@@ -67,6 +67,10 @@ def finish(params):
 		lastBuildDate = datetime.datetime.now(),
 		items = items,
 	)
+	# Step one of self-reference
+	# (see http://feedvalidator.org/docs/warning/MissingAtomSelfLink.html)
+	rss.rss_attrs["xmlns:atom"] = "http://www.w3.org/2005/Atom"
+	
 	try:
 		os.makedirs(cfg.out_dir)
 	except:
@@ -74,5 +78,7 @@ def finish(params):
 	f = open(os.path.join(cfg.out_dir, cfg.rss_file), "w")
 	# Ugly XML beautification
 	s = rss.to_xml().replace("<", "\n<").replace("\n\n", "\n")[1:]
+	# Step two of self-reference
+	s = s.replace('<channel>', '<channel>\n<atom:link href="http://%s/%s" rel="self" type="application/rss+xml" />' % (cfg.main_url, cfg.rss_file))
 	f.write(s)
 	f.write("\n")
