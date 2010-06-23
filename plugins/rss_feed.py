@@ -16,6 +16,8 @@ def checkconfig(params):
 	if not cfg.has_key("rss_file"):
 		log('no "rss_file:" configured, using "feed.rss":', 4)
 		cfg.rss_file = "feed.rss"
+	if not cfg.has_key("rss_max_items"):
+		cfg.rss_max_items = 0
 	if cfg.has_key("rss_max_age_days"):
 		import time
 		global max_age
@@ -66,8 +68,14 @@ def sitemap_scan(params):
 
 @set_hook("finish")
 def finish(params):
+	global items
 	# Sort items by pubDate, which still holds the mtime
 	items.sort(key=lambda i: i.pubDate, reverse=True)
+
+	# Limit to requested number
+	count = int(cfg.rss_max_items)
+	if count:
+		items = items[:count]
 
 	# convert mtime to real pupDate
 	for i in items:
