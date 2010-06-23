@@ -73,7 +73,6 @@ def linkify(params):
 def get_toc():
     level = 1
     res = []
-    res.append('<ul id="toc">')
     for (label, lvl, txt) in toc:
         while lvl > level:
             res.append("%s<ul>" % ("  "*level))
@@ -82,7 +81,6 @@ def get_toc():
             level -= 1
             res.append("%s</ul>" % ("  "*level))
         res.append('%s<li><a href="#%s">%s</a></li>' % ("  " * level, label, txt))
-    while level:
+    while level > 1:
         level -= 1
-        res.append("%s</ul>" % ("  "*level))
     return "\n".join(res)
