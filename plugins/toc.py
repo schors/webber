@@ -6,6 +6,7 @@ import htmlentitydefs, re
 reHeader = re.compile(r'<h(\d)(.*)>(.*)</h\1>', re.IGNORECASE | re.MULTILINE)
 _toc = []
 _labels = {}
+_first = -1
 
 toc_min_lines = 30
 
@@ -47,6 +48,7 @@ def repl(m):
 	header.
 	"""
 	global _toc
+	global _first
 	label = slugify(m.group(3), "_")
 	if _labels.has_key(label):
 		n = 0
@@ -57,7 +59,10 @@ def repl(m):
 				break
 			n += 1
 
-	_toc.append( (int(m.group(1)), m.group(3), label) )
+	level = int(m.group(1))
+	if _first == -1:
+		_first = level
+	_toc.append( (level - _first, m.group(3), label) )
 	_labels[label] = 1
 	return '<h%s%s>%s<a name="%s">&nbsp;</a></h%s>' % (
 		m.group(1),
@@ -72,8 +77,10 @@ def repl(m):
 def linkify(params):
 	global _toc
 	global _labels
+	global _first
 	_toc = []
 	_labels = {}
+	_first = -1
 
 	# Very small pages don't need a table-of-contents
 	if params.file.contents.count("\n") < toc_min_lines:
