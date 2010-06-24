@@ -7,7 +7,6 @@ reHeader = re.compile(r'<h(\d)(.*)>(.*)</h\1>', re.IGNORECASE | re.MULTILINE)
 toc = []
 labels = {}
 
-
 toc_min_lines = 30
 
 
@@ -19,7 +18,12 @@ def checkconfig(params):
 
 
 def slugify(text, separator):
-    """Based on http://snipplr.com/view/26266/create-slugs-in-python/"""
+	"""
+	This function converts a normal text string into a string, that
+	can be safely used for HTML links and anchors.
+
+	Based on http://snipplr.com/view/26266/create-slugs-in-python/
+	"""
 
     ret = ""
     for c in text.lower():
@@ -52,6 +56,15 @@ def repl(m):
         m.group(3),
         label,
         m.group(1))
+	"""
+	Function used for re.sub() to find all header elements (h1, h2, ...).
+	Data from those elements (level, headline) are stored in the global
+	array `toc`.
+
+	This function also modifies the text by adding a anchor to the
+	header.
+	"""
+
 
 
 @set_hook("linkify")
