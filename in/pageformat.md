@@ -119,7 +119,7 @@ name. For convenience, you can ommit "`.tmpl`".
 == description ==
 
 Anything you specify here will be accessible in the template as ${description}.
-You can use this for HTML meta information, see [[template_make]].
+You can use this for HTML meta information, see [[template_mako]].
 
 If you don't specify a description, then ${description} will be the empty string.
 
@@ -127,7 +127,7 @@ If you don't specify a description, then ${description} will be the empty string
 == keywords ==
 
 Anything you specify here will be accessible in the template as ${keywords}.
-You can use this for HTML meta information, see [[template_make]].
+You can use this for HTML meta information, see [[template_mako]].
 
 If you don't specify a description, then ${keywords} will be the empty string.
 

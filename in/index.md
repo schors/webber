@@ -1,12 +1,13 @@
 title: Webber
 ctime: 2009-06-24
+mtime: 2009-06-24
 
 * [[overview]]
 * [[pageformat]]
 * [[configuration]]
  * [[commandline]]
  * [[inheritance]]
-* [[plugins]]
+* [[Plugins]]
  * [[read_rst]]
  * [[read_markdown]]
  * [[read_html]]
@@ -18,4 +19,3 @@ ctime: 2009-06-24
 * [[hooks]]
 * [[functions]]
 * [[macros]]
-* [[templates]]

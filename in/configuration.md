@@ -1,6 +1,7 @@
 title: Configuration
 parent: Webber
 ctime: 2009-06-24
+mtime: 2009-06-24
 
 Configuration happens either the [[commandline]] or
 via the configuration file (described below). All Configurations are
@@ -72,7 +73,7 @@ List of  to load.
 
 == plugin_dirs ==
 
-List of directories that should be search for [[plugins]]. Can be empty or
+List of directories that should be search for [[plugins|Plugins]]. Can be empty or
 completely omitted.
 
 == exclude_dirs ==
