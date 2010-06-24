@@ -11,21 +11,21 @@ from config import Holder
 
 __all__ = [
 	# Globals
-	"cfg",          # configuration from webber.ini
-	"directories",  # global hash of directories, by rel_path
-	"files",        # global hash of files, by rel_path
-	"functions",    # all exported template functions
+	"cfg",			# configuration from webber.ini
+	"directories",	# global hash of directories, by rel_path
+	"files",		# global hash of files, by rel_path
+	"functions",	# all exported template functions
 
 	# Functions
-	"set_hook",     # decorator for hook-functions
-	"set_macro",    # define macro
+	"set_hook",		# decorator for hook-functions
+	"set_macro",	# define macro
 	"set_function", # define functions for the template
 	"get_file_for",
 	"get_link_from",
 	"get_current_file", # because mako-called functions cannot access the
-	                # current File object
+					# current File object
 	"get_program_directory",
-	"log",          # misc logging functions
+	"log",			# misc logging functions
 	"info",
 	"warning",
 	"error",
@@ -229,7 +229,7 @@ def get_link_from(source, dest):
 	if rel_path.startswith("./"):
 		rel_path = rel_path[2:]
 	#print "  from path:", source.out_path
-	#print "  to path:  ", out_path
+	#print "  to path:	", out_path
 	#print "  rel path: ", rel_path
 	return rel_path
 
@@ -255,10 +255,10 @@ def get_program_directory():
 #
 #  Logging
 #
-#	1    Error
-#	2    Warning
-#	3    Info
-#	4    Log
+#	1	 Error
+#	2	 Warning
+#	3	 Info
+#	4	 Log
 #	5... Debug
 #
 def log(s, level=4):
@@ -288,43 +288,43 @@ def info(s):
 
 # IkiWiki does something like this:
 # At startup:
-#	getopt               modify ARGV
-#	checkconfig          check configuration
-#	refresh              allow plugins to build source files
+#	getopt				 modify ARGV
+#	checkconfig			 check configuration
+#	refresh				 allow plugins to build source files
 # While scanning files:
-#	needsbuild           detect if page needs to be rebuild
-#	filter               arbitrary changes
-#	scan                 collect metadata
+#	needsbuild			 detect if page needs to be rebuild
+#	filter				 arbitrary changes
+#	scan				 collect metadata
 # While rendering files:
-#	filter               arbitrary changes
-#	preprocess           execute macros
-#	linkify              change wikilinks into links
-#	htmlize              turns text into html
-#	sanitize             sanitize html
-#	templatefile         allows changing of the template on a per-file basis
-#	pagetemplate         fill template with page
-#	format               similar to sanitize, but act on whole page body
+#	filter				 arbitrary changes
+#	preprocess			 execute macros
+#	linkify				 change wikilinks into links
+#	htmlize				 turns text into html
+#	sanitize			 sanitize html
+#	templatefile		 allows changing of the template on a per-file basis
+#	pagetemplate		 fill template with page
+#	format				 similar to sanitize, but act on whole page body
 # At the end:
-#	savestate            plugins can save their state
+#	savestate			 plugins can save their state
 #
 #
 # We do something like this:
 #
 # At startup:
-#	addoptions           allow plugins to add command-line options
-#	checkconfig          check configuration
+#	addoptions			 allow plugins to add command-line options
+#	checkconfig			 check configuration
 #	start
 # While reading files:
-#	read                 ask any reader (plugins!) to read the file
-#	filter               ask anybody to filter the contents
+#	read				 ask any reader (plugins!) to read the file
+#	filter				 ask anybody to filter the contents
 # While scanning files:
-#	scan                 called per file, let plugins act on file data
-#	scan_done            Allows post-processing of scanned data
+#	scan				 called per file, let plugins act on file data
+#	scan_done			 Allows post-processing of scanned data
 # While rendering files:
-#	htmlize              turns text into html-part
-#	linkify              convert link macros to HTML
-#	pagetemplate         ask template engine (plugin!) to generate HTML out
-#	                     of template and body part
+#	htmlize				 turns text into html-part
+#	linkify				 convert link macros to HTML
+#	pagetemplate		 ask template engine (plugin!) to generate HTML out
+#						 of template and body part
 # At the end:
 #	finish
 #
@@ -554,14 +554,14 @@ def walk_tree(dirpath):
 #
 
 reMacro = re.compile(r'''
-	\[\[\!                  # Begin of macro
+	\[\[\!					# Begin of macro
 	\s*
-	([^\s\]]+)              # Macro name
+	([^\s\]]+)				# Macro name
 	(?:
-		\s+                 # optional space
-        ([^\]]+)            # optional argumens
+		\s+					# optional space
+		([^\]]+)			# optional argumens
 	)?
-	\]\]                    # End of macro
+	\]\]					# End of macro
 	''', re.VERBOSE)
 reMacroArgs = re.compile(r'''
 	([-_\w]+)				# parameter name
@@ -570,9 +570,9 @@ reMacroArgs = re.compile(r'''
 		=
 		\s*
 		(?:
-			"([^"]*)"       # single-quoted
+			"([^"]*)"		# single-quoted
 		|
-			(\S+)           # unquoted
+			(\S+)			# unquoted
 		)
 	)?
 	''', re.VERBOSE)

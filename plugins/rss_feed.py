@@ -27,16 +27,16 @@ def checkconfig(params):
 # Helper class needed for datetime.datetime to generate GMT timestamps
 ZERO = datetime.timedelta(0)
 class UTC(datetime.tzinfo):
-    """UTC"""
+	"""UTC"""
 
-    def utcoffset(self, dt):
-        return ZERO
+	def utcoffset(self, dt):
+		return ZERO
 
-    def tzname(self, dt):
-        return "UTC"
+	def tzname(self, dt):
+		return "UTC"
 
-    def dst(self, dt):
-        return ZERO
+	def dst(self, dt):
+		return ZERO
 utc = UTC()
 
 

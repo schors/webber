@@ -5,18 +5,18 @@ import os, re
 # To understand this beast, read /usr/share/doc/python2.5-doc/html/lib/module-re.html :-)
 
 reLink = re.compile(r'''
-	\[\[                # Begin of link
-	(?=[^!])            # Don't fire for macros
+	\[\[				# Begin of link
+	(?=[^!])			# Don't fire for macros
 	(?:
-		([^\]\|]+)      # 1: link text
-		\|              # followed by '|'
-	)?                  # optional
-	([^\n\r\]#]+)       # 2: page to link to
+		([^\]\|]+)		# 1: link text
+		\|				# followed by '|'
+	)?					# optional
+	([^\n\r\]#]+)		# 2: page to link to
 	(
-		\#              # '#', beginning of anchor
-		[^\s\]]+        # 3: anchor text, doesn't contain spaces or ']'
-	)?                  # optional
-	\]\]                # end of link
+		\#				# '#', beginning of anchor
+		[^\s\]]+		# 3: anchor text, doesn't contain spaces or ']'
+	)?					# optional
+	\]\]				# end of link
 	''', re.VERBOSE)
 
 def do_link(m):
@@ -55,9 +55,9 @@ def test_link():
 		m = reLink.search(s)
 		if m:
 			print "link:", s
-			print "  name:", m.group(1)
-			print "  link:", m.group(2)
-			print "  anchor:", m.group(3)
+			print "	 name:", m.group(1)
+			print "	 link:", m.group(2)
+			print "	 anchor:", m.group(3)
 		else:
 			print "No link:", s
 
