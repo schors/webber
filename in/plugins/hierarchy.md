@@ -2,6 +2,7 @@ title: Generate hierarchy
 linktitle: hierarchy.py
 parent: Plugins
 ctime: 2009-06-26
+mtime: 2009-06-26
 
 This is one of the more complex plugins, used to generate menus and
 breadcrumbs. For this, it reads certain keyword from the
@@ -93,7 +94,7 @@ Here's a sample Mako template excerpt:
 = Generation of a side-menu =
 
 This again is done via a suitable [[template_mako]]. The
-template uses the function "`get_sidemenu()`" and returns (level,
+template uses the function "`get_sidemenu()`" which returns (level,
 part_of_path, is_current, title, link) tuples. Again all links are relative
 to the calling page.
 
@@ -105,7 +106,8 @@ to the calling page.
 * "`title`" is the full title for the page
 * "`link`" is the relative URL to the page
 
-Here's a sample Mako template excerpt that converts this into a HTML menu:
+Here's a sample [[Mako template|template_mako]] excerpt that converts
+this into a HTML menu:
 
 	<ul id="sidebar">
 	% for level, part_of_path, current, page, link in get_sidemenu():

@@ -31,7 +31,7 @@ def memorize_parent(title, parent, order=100):
 		_childs[parent] = []
 	_childs[parent].append( (order, title) )
 	_parent[title] = parent
-	
+
 
 #
 # The "scan" plugins should scan for meta-data, mostly for links.
