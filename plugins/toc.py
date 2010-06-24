@@ -4,8 +4,8 @@ import htmlentitydefs, re
 
 
 reHeader = re.compile(r'<h(\d)(.*)>(.*)</h\1>', re.IGNORECASE | re.MULTILINE)
-toc = []
-labels = {}
+_toc = []
+_labels = {}
 
 toc_min_lines = 30
 
@@ -38,24 +38,6 @@ def slugify(text, separator):
 
 
 def repl(m):
-	global toc
-	label = slugify(m.group(3), "_")
-	if labels.has_key(label):
-		n = 0
-		while True:
-			l = "%s_%d" % (label, n)
-			if not labels.has_key(l):
-				label = l
-				break
-			n += 1
-
-	toc.append( (label, int(m.group(1))-1, m.group(3)) )
-	return '<h%s%s>%s<a name="%s">&nbsp;</a></h%s>' % (
-		m.group(1),
-		m.group(2),
-		m.group(3),
-		label,
-		m.group(1))
 	"""
 	Function used for re.sub() to find all header elements (h1, h2, ...).
 	Data from those elements (level, headline) are stored in the global
@@ -64,15 +46,34 @@ def repl(m):
 	This function also modifies the text by adding a anchor to the
 	header.
 	"""
+	global _toc
+	label = slugify(m.group(3), "_")
+	if _labels.has_key(label):
+		n = 0
+		while True:
+			l = "%s_%d" % (label, n)
+			if not _labels.has_key(l):
+				label = l
+				break
+			n += 1
+
+	_toc.append( (int(m.group(1)), m.group(3), label) )
+	_labels[label] = 1
+	return '<h%s%s>%s<a name="%s">&nbsp;</a></h%s>' % (
+		m.group(1),
+		m.group(2),
+		m.group(3),
+		label,
+		m.group(1))
 
 
 
 @set_hook("linkify")
 def linkify(params):
-	global toc
-	global labels
-	toc = []
-	labels = {}
+	global _toc
+	global _labels
+	_toc = []
+	_labels = {}
 
 	# Very small pages don't need a table-of-contents
 	if params.file.contents.count("\n") < toc_min_lines:
@@ -84,17 +85,4 @@ def linkify(params):
 
 @set_function("get_toc")
 def get_toc():
-	level = 1
-	res = []
-	for (label, lvl, txt) in toc:
-		while lvl > level:
-			res.append("%s<ul>" % ("  "*level))
-			level += 1
-		while lvl < level:
-			level -= 1
-			res.append("%s</ul>" % ("  "*level))
-		res.append('%s<li><a href="#%s">%s</a></li>' %
-		           ("  " * level, label, txt))
-	while level > 1:
-		level -= 1
-	return "\n".join(res)
+	return _toc
