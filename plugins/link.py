@@ -41,7 +41,11 @@ def do_link(m):
 				break
 	if not text:
 		text = link
-	# TODO: validate link
+	# validate link
+	# TODO: validating local files still not working
+	if not link.startswith("http:") and not link.endswith(".html") and not link.endswith(".png"):
+		file = get_current_file()
+		warning("%s: unknown link to '%s'" % (file.rel_path, link) )
 	return '<a href="%s%s">%s</a>' % (link, anchor, text)
 
 
