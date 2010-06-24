@@ -1,6 +1,7 @@
 title: Hooks
 parent: Webber
 ctime: 2009-06-24
+change: changed behavior of linkify hook
 
 = At Startup =
 
