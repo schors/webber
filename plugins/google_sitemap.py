@@ -36,8 +36,14 @@ def write_initial(params):
 def sitemap_scan(params):
 	global f
 	file = params.file
+
+	# Ignore non-pages
 	if not file.has_key("linktitle"):
 		return
+	# Ignore hidden pages
+	if file.has_key("hide") and file.hide:
+		return
+
 	if f is None:
 		write_initial(params)
 

@@ -45,10 +45,16 @@ def sitemap_scan(params):
 	global items
 
 	file = params.file
+	# Only consider new stuff
 	if max_age and file["mtime"] < max_age:
 		return
+	# Ignore non-pages
 	if not file.has_key("linktitle"):
 		return
+	# Ignore hidden pages
+	if file.has_key("hide") and file.hide:
+		return
+
 	if file.has_key("change"):
 		change = file["change"]
 	else:
