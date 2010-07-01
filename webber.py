@@ -707,7 +707,7 @@ def render_files():
 		f = open(fname_out, "w")
 		f.write(contents)
 		f.close()
-		# TODO: Time-Stamps setzen?
+		os.utime(fname_out, (file.mtime, file.mtime))
 
 		#print file.mtime, file.get("ctime","?")
 		#print direc.keys()
