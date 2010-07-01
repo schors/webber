@@ -2,6 +2,7 @@ title: Google Sitemap generation
 linktitle: google_sitemap.py
 parent: Plugins
 keywords: Google, XML, Sitemap generator
+lang: en
 ctime: 2009-06-26
 mtime: 2009-06-26
 

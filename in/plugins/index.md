@@ -1,6 +1,8 @@
 title: Plugins
 parent: Webber
+lang: en
 ctime: 2009-06-26
+mtime: 2010-04-16
 
 Webber doesn't do much on it's own. Almost all the real work is delegated
 to plugins. Those plugins do:

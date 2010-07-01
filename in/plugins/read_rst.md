@@ -1,7 +1,9 @@
 title: Read RST
 linktitle: read_rst.py
 parent: Plugins
+lang: en
 ctime: 2009-06-26
+mtime: 2009-06-26
 
 This plugin reads "`*.rst`" files and converts them to HTML.
 

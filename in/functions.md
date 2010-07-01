@@ -1,6 +1,8 @@
 title: Functions
 parent: Webber
+lang: en
 ctime: 2009-06-24
+mtime: 2010-06-24
 change: described get_toc()
 
 = Calling functions =

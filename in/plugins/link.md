@@ -1,7 +1,9 @@
 title: Create HTML links
 linktitle: link.py
 parent: Plugins
+lang: en
 ctime: 2009-06-26
+mtime: 2009-06-26
 
 This plugin converts strings in the form
 

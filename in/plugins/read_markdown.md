@@ -1,7 +1,9 @@
 title: Read Markdown
 linktitle: read_markdown.py
 parent: Plugins
+lang: en
 ctime: 2009-06-26
+mtime: 2009-06-26
 
 This plugin reads "`*.md`" files and converts them to HTML.
 

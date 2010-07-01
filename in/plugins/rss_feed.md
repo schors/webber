@@ -2,7 +2,9 @@ title: RSS feed generator
 linktitle: rss_feed.py
 parent: Plugins
 keywords: RSS
+lang: en
 ctime: 2010-06-23
+mtime: 2010-06-23
 
 This plugins write an XML file "`feed.rss`" (can be changed) into the
 out-directory. The format is according to the RSS feed documentation

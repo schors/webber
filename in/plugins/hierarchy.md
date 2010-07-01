@@ -1,6 +1,7 @@
 title: Generate hierarchy
 linktitle: hierarchy.py
 parent: Plugins
+lang: en
 ctime: 2009-06-26
 mtime: 2009-06-26
 

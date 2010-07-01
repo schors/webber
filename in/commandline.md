@@ -1,7 +1,9 @@
 title: Command line options
 linktitle: Cmdline
 parent: Configuration
+lang: en
 ctime: 2009-06-24
+mtime: 2009-06-26
 
 = Help =
 

@@ -1,7 +1,9 @@
 title: Mako template
 linktitle: template_mako.py
 parent: Plugins
+lang: en
 ctime: 2009-06-26
+mtime: 2010-06-23
 change: finally documented how templates work
 
 This plugin uses the [[Mako template

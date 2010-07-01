@@ -1,7 +1,9 @@
 title: Generate table of contents
 linktitle: toc.py
 parent: Plugins
+lang: en
 ctime: 2010-06-23
+mtime: 2010-06-24
 change: make get_toc() work like get_recently()
 
 This plugin analyzes the HTML header statements (h1, h2, h3 ...) and

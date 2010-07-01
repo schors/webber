@@ -1,6 +1,7 @@
 title: Sample plugin skeleton
 linktitle: skeleton.py
 parent: Plugins
+lang: en
 ctime: 2009-06-26
 mtime: 2009-06-26
 change: described usage
