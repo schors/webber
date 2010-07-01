@@ -6,6 +6,7 @@ mtime: 2009-06-24
 * [[configuration]]
  * [[commandline]]
  * [[inheritance]]
+* [[inheritance]]
 * [[Plugins]]
  * [[read_rst]]
  * [[read_markdown]]

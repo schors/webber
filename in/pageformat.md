@@ -26,8 +26,8 @@ by "`file.XXXX`" and you're free to invent your own keywords:
 
 	Hi, I'm Mario and I won't tell you more about me :-)
 
-Now you can access "`${file.subtitle}`" in your template and as
-"`params.file.subtitle`" in your own [[macros|macros]] or
+Now you can access "`${file.subtitle}`" in your template or
+"`params.file.subtitle`" in your [[macros|macros]] and
 [[functions|functions]].
 
 
@@ -68,6 +68,12 @@ breadcrumbs and a side-menu.
 Used by [[hierarchy]] to indicate relationship.
 
 
+== links ==
+
+Used by [[hierarchy]] to indicate relationship. Usually it's better to use
+"`parent`" instead.
+
+
 == order ==
 
 All pages with the same "`parent`" will end up below the parent on the
@@ -77,11 +83,6 @@ If you don't want this default sort order, you can specify your own ordering.
 
 The default order is 100, so anything with a lower order will show up on the
 top, anything higher at the bottom of the side-menu.
-
-== links ==
-
-Used by [[hierarchy]] to indicate relationship. Usually it's better to use
-"`parent`" instead.
 
 
 == ctime ==

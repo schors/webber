@@ -477,9 +477,9 @@ def read_file(direc, file):
 		return_holder=False)
 	if not contents:
 		return
+	file.contents = contents
 
 	log("filtering file %s" % file.rel_path, level=6)
-	file.contents = contents
 	res = run_hooks("filter",
 		direc=direc,
 		file=file)
