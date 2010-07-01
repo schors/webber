@@ -21,4 +21,4 @@ A sample "`test.html`" document looks like this:
 	<!-- to be continued -->
 
 You'll find more about "`title:`", "`parent:`" and "`ctime:`" in the
-[[page format|pageformat.html]] description.
+[[page format|pageformat]] description.

@@ -27,7 +27,7 @@ A sample "`test.md`" document looks like this:
 	Don't send me spam, *ever*!
 
 You'll find more about "`title:`", "`parent:`" and "`ctime:`" in the
-[[page format|pageformat.html]] description.
+[[page format|pageformat]] description.
 
 = Modifications =
 

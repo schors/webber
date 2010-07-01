@@ -1,6 +1,8 @@
 # -*- coding: iso-8859-1 -*-
 from webber import *
-import os, re
+import os, re, urlparse
+
+_file_links = {}
 
 # To understand this beast, read /usr/share/doc/python2.5-doc/html/lib/module-re.html :-)
 
@@ -18,6 +20,7 @@ reLink = re.compile(r'''
 	)?					# optional
 	\]\]				# end of link
 	''', re.VERBOSE)
+
 
 def do_link(m):
 	"""Used in re.sub() to substitute link with HTML"""
@@ -41,11 +44,13 @@ def do_link(m):
 				break
 	if not text:
 		text = link
-	# validate link
-	# TODO: validating local files still not working
-	if not link.startswith("http:") and not link.endswith(".html") and not link.endswith(".png"):
+	# validate local files
+	components = urlparse.urlparse(link)
+	if components.scheme in ("", "file"):
 		file = get_current_file()
-		warning("%s: unknown link to '%s'" % (file.rel_path, link) )
+		fname = os.path.join(file.direc, components.path)
+		fname = os.path.normpath(fname)
+		_file_links[fname] = file.rel_path
 	return '<a href="%s%s">%s</a>' % (link, anchor, text)
 
 
@@ -65,6 +70,7 @@ def test_link():
 		else:
 			print "No link:", s
 
+
 def test_sub():
 	for s in (
 			'Before [[!macro]] after',
@@ -80,3 +86,15 @@ def test_sub():
 @set_hook("linkify")
 def linkify(params):
 	params.file.contents = reLink.sub(do_link, params.file.contents)
+
+
+@set_hook("finish")
+def check_links(params):
+	"""Checks all links that are stored in _file_links to warn if the
+	file doesn't exist"""
+
+	for s in _file_links:
+		#print "check:", s, cfg.out_dir
+		out_file = os.path.join(cfg.out_dir, s)
+		if not os.path.exists(out_file):
+	    		warning("%s: invalid link to '%s'" % (_file_links[s], s))

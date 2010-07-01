@@ -27,4 +27,4 @@ standard Python module "`docutils`" to convert RST into HTML. A sample
 	Don't send me spam, *ever*!
 
 You'll find more about "`title:`", "`parent:`" and "`ctime:`" in the
-[[page format|pageformat.html]] description.
+[[page format|pageformat]] description.
