@@ -13,10 +13,10 @@ def read(params):
 
 
 class WebHTMLTranslator(html4css1.HTMLTranslator):
-	doctype = ""	
+	doctype = ""
 	content_type = "<!--%s-->"
 	generator = "<!--%s-->"
-	
+
 	def __init__(self, document):
 		html4css1.HTMLTranslator.__init__(self, document)
 		self.head_prefix = []
@@ -24,13 +24,13 @@ class WebHTMLTranslator(html4css1.HTMLTranslator):
 		self.stylesheet = []
 		self.body_suffix = []
 		self.section_level = 1
-		
+
 	def visit_system_message(self, node):
 		pass
 
 	def visit_document (self, node):
 		pass
-	
+
 	def depart_document (self, node):
 		pass
 
