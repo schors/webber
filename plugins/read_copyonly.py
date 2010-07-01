@@ -1,6 +1,6 @@
 # -*- coding: iso-8859-1 -*-
 from webber import *
-import os, fnmatch
+import os, shutil, fnmatch
 
 
 @set_hook("read")
@@ -23,9 +23,9 @@ def copyfile(params):
 		os.makedirs(out_dir)
 	except OSError:
 		pass
-	cmd = "cp -l %s %s" % (
-		os.path.join(cfg.in_dir, file.rel_path),
-		out_path
-		)
-	#print cmd
-	os.system(cmd)
+	try:
+		shutil.copy(os.path.join(cfg.in_dir, file.rel_path), out_path)
+	except:
+		os.remove(out_path)
+		shutil.copy(os.path.join(cfg.in_dir, file.rel_path), out_path)
+	shutil.copystat(os.path.join(cfg.in_dir, file.rel_path), out_path)
