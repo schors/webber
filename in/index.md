@@ -2,7 +2,6 @@ title: Webber
 ctime: 2009-06-24
 mtime: 2009-06-24
 
-* [[overview]]
 * [[pageformat]]
 * [[configuration]]
  * [[commandline]]

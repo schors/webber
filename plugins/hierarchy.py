@@ -43,6 +43,11 @@ def memorize_parent(title, parent, order=100):
 @set_hook("scan")
 def scan(params):
 	file = params["file"]
+
+	# Ignore hidden pages
+	if file.has_key("hide") and file.hide:
+		return
+
 	if file.has_key("links"):
 		memorize_links(file.linktitle, file.links)
 	if file.has_key("parent"):

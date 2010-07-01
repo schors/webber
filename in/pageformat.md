@@ -116,6 +116,13 @@ name. For convenience, you can ommit "`.tmpl`".
 	template: history
 
 
+== hide ==
+
+	hide: true
+
+will hide the generated page from in the plugins [[hierarchy]] and [[toc]].
+
+
 == description ==
 
 Anything you specify here will be accessible in the template as ${description}.

@@ -82,6 +82,10 @@ def linkify(params):
 	_labels = {}
 	_first = -1
 
+	# Ignore hidden pages
+	if params.file.has_key("hide") and params.file.hide:
+		return
+
 	# Very small pages don't need a table-of-contents
 	if params.file.contents.count("\n") < toc_min_lines:
 		return
