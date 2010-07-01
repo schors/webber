@@ -617,7 +617,7 @@ def scan_files():
 
 		direc = directories[file.direc]
 
-		# Output-Filename "berechnen"
+		# "calculate" output file name
 		if file.render and file.render == "html":
 			file.out_path = os.path.splitext(s)[0] + ".html"
 
@@ -682,9 +682,8 @@ def render_files():
 		if not file.contents:
 			continue
 
-		# TODO: einige Fragmente sollen u.U. in eine andere
-		# Webseite eingebaut werden und sollten daher nicht in
-		# ein HTML-File landen
+		# TODO: make it possible to render also "fragments", e.g.
+		# parts that don't end up immediately in a the HTML file.
 		contents = run_hooks("pagetemplate",
 			direc=direc,
 			file=file,
@@ -702,7 +701,8 @@ def render_files():
 		except OSError:
 			pass
 
-		# TODO: evtl. überprüfen, ob contents == f.read(), dann nicht schreiben
+		# TODO: check if contents == f.read(). In this case we don't
+		# need to save. Probably overkill.
 		log("writing file %s" % fname_out, level=6)
 		f = open(fname_out, "w")
 		f.write(contents)
