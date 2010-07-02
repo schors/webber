@@ -217,7 +217,7 @@ def get_link_from(source, dest):
 	if not isinstance(dest, File):
 		dest = get_file_for(dest)
 	if not dest:
-		print "NO DEST"
+		warning("unknown link from %s to %s" % (source.rel_path, dest))
 		return "."
 	rel_path = relpath(directories[source.direc].abs_path, directories[dest.direc].abs_path)
 	try:
