@@ -127,15 +127,54 @@ def get_sidemenu(root="Home", level=1):
 
 
 
-@set_function("get_sitemap")
-def get_sitemap(root="Home", show_orphans=False, level=1):
+@set_function("get_hierarchical_sitemap")
+def get_hierarchical_sitemap(root="Home", show_orphans=False):
 	page = get_current_file()
 	if not isinstance(root, webber.File):
 		root = get_file_for(root)
 
-	res = [(0, root, get_link_from(page, root))]
+	visited = {root: True}
+	def do_menu(pg):
+		res = []
+		if _childs.has_key(pg.linktitle):
+			for p in _childs[pg.linktitle]:
+				subpage = get_file_for(p[1])
+				visited[subpage] = True
+				res.append( do_menu(subpage) )
+		return (pg, get_link_from(root, pg), res)
+		
+	res = do_menu(root)
+
+
+	if show_orphans:
+		for f in files:
+			#print f
+			file = files[f]
+			if not file.has_key("linktitle"):
+				continue
+			try:
+				if file in visited:
+					#print "found", file.linktitle
+					continue
+			except KeyError:
+				continue
+			#print "not found:", file.linktitle
+			res.append( (file, get_link_from(page, file.linktitle), []) )
+
+	#import pprint
+	#pprint.pprint(res, indent=4)
+	return res
+
+
+@set_function("get_linear_sitemap")
+def get_linear_sitemap(root="Home", show_orphans=False, level=1):
+	page = get_current_file()
+	if not isinstance(root, webber.File):
+		root = get_file_for(root)
 
 	visited = {root: None}
+	res = [(0, root, )]
+
 	def do_menu(pg, level):
 		#print "pg:", pg
 		#, _childs.has_key(pg.linktitle)
@@ -166,7 +205,8 @@ def get_sitemap(root="Home", show_orphans=False, level=1):
 				continue
 			#print "not found:", file.linktitle
 			res.append( (0, file, get_link_from(page, file.linktitle)))
-	#for t in res: print t
+	import pprint
+	pprint.pprint(res)
 	return res
 
 

@@ -3,7 +3,7 @@
 <%def name="contents()">\
 ${body}
 <%
-  site = get_sitemap("Webber", True)
+  site = get_linear_sitemap("Webber", True)
 %>
 <ul>
 % for level, page, link in site:

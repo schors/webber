@@ -147,7 +147,7 @@ To generate a site map for your whole project, do something like
 this:
 
 	<%
-	  site = get_sitemap()
+	  site = get_linear_sitemap()
 	%>
 	<ul>
 	% for level, page, link in site:
@@ -160,7 +160,7 @@ normal "`<ul>..<li><ul><li></li></ul>..</il>`" style, you'd could do this
 with some more advanced Mako template magic:
 
 	<%
-	  site = get_sitemap()
+	  site = get_linear_sitemap()
 	  lvl = -1
 	%>
 	% for level, page, link in site:

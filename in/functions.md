@@ -66,13 +66,15 @@ You'll need to specify "`root`" if your top-most page isn't named "`Home`".
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
 
-== get_sitemap(root, show_orphans) ==
+== get_linear_sitemap(root, show_orphans, level) ==
 
 Returns all pages as "`(level, page, link)`" tuples, where "`page`" is a
 "`class File`"-object and link is a relative link from the current page to
 "`page`".
 
 You'll need to specify "`root`" if your top-most page isn't named "`Home`".
+
+The "`level`" will by default start at 1.
 
 To put pages into the sitemap that are outside the parent/child relationships,
 specify "`True`" for "`show_orphans`".
