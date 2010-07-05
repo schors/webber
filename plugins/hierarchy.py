@@ -173,7 +173,7 @@ def get_linear_sitemap(root="Home", show_orphans=False, level=1):
 		root = get_file_for(root)
 
 	visited = {root: None}
-	res = [(0, root, )]
+	res = [(0, root, get_link_from(page, root))]
 
 	def do_menu(pg, level):
 		#print "pg:", pg
@@ -205,8 +205,8 @@ def get_linear_sitemap(root="Home", show_orphans=False, level=1):
 				continue
 			#print "not found:", file.linktitle
 			res.append( (0, file, get_link_from(page, file.linktitle)))
-	import pprint
-	pprint.pprint(res)
+	#import pprint
+	#pprint.pprint(res)
 	return res
 
 
