@@ -50,7 +50,15 @@ class Directory(Holder):
 
 	def __init__(self, **kw):
 		Holder.__init__(self, **kw)
-		directories[kw["rel_path"]] = self
+		kw["rel_path"] = self
+		if self.rel_path == "":
+			self.rel_path = "."
+		directories[self.rel_path] = self
+		try:
+			self.load(os.path.join(self.abs_path, "directory.conf"))
+			#print self
+		except IOError:
+			pass
 
 
 files = {}
