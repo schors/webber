@@ -81,8 +81,8 @@ is this:
 	<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 	<item>
 	<title>QtIAX</title>
-	<link>http://www.holgerschurig.de/out/qtiax.html</link>
+	<link>http://www.holgerschurig.de/qtiax.html</link>
 	<description></description>
-	<guid isPermaLink="false">http://www.holgerschurig.de/out/qtiax.html 1260652641</guid>
+	<guid isPermaLink="false">http://www.holgerschurig.de/qtiax.html 1260652641</guid>
 	<pubDate>Sat, 12 Dec 2009 21:17:21 GMT</pubDate></item></channel></rss>
 
