@@ -519,7 +519,7 @@ def walk_tree(dirpath):
 			full_path = os.path.join(dirpath, s)
 			ok = True
 			if os.path.isdir(full_path):
-				for e in cfg.exclude_dir:
+				for e in cfg.exclude_dirs:
 					if fnmatch.fnmatchcase(s, e):
 						log("ignoring directory %s" % s, level=7)
 						ok = False
