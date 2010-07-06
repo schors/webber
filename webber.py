@@ -777,7 +777,12 @@ def main():
 	# link contents of webber.ini into cfg and set some defaults,
 	# then let plugins fixup things in cfg.*
 	cfg.inheritFrom(options)
-	cfg.setDefault("exclude_dir", ["plugins"])
+	cfg.setDefault("exclude_dirs", [])
+	cfg.setDefault("exclude_files", ["webber.conf", "directory.conf", "*.tmpl"])
+	cfg.setDefault("copy_files", [])
+	cfg.setDefault("input_encoding", "iso-8859-1")
+	cfg.setDefault("output_encoding", "iso-8859-1")
+	cfg.setDefault("template", "default")
 	run_hooks("checkconfig")
 
 	run_hooks("start")
