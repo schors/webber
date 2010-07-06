@@ -1,4 +1,4 @@
-title: Mako template
+title: Mako templates
 linktitle: template_mako.py
 parent: Plugins
 lang: en

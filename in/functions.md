@@ -5,11 +5,14 @@ ctime: 2009-06-24
 mtime: 2010-06-24
 change: described get_toc()
 
-= Calling functions =
+You can call functions only from [[template_mako]], not from
+[[pages|pageformat]]. If you need the latter, look at [[macros]].
 
-You can call functions only from [[template_mako]]. An example:
+= Example =
 
 	Modified ${format_date(mtime)}
+
+= List of functions =
 
 Here's list of functions defined by webber and it's default plugins:
 
@@ -86,10 +89,6 @@ Defined in [[hierarchy.py|hierarchy]], where you find an example.
 Returns an unsorted list with the hierarchy of the table-of-contents.
 
 Defined in [[toc.py|toc]], where you find an example.
-
-== func ==
-
-A sample function in the [[skeleton.py|skeleton]]. See below.
 
 
 = Writing functions =

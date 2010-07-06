@@ -2,10 +2,33 @@ title: Hooks
 parent: Webber
 lang: en
 ctime: 2009-06-24
-mtime: 2010-06-24
-change: changed behavior of linkify hook
+mtime: 2010-07-06
+change: new introductory text about hooks
 
-= At Startup =
+Webber can read and use any number of [[Plugins]], even user-supplied.
+Therefore, while writing "`webber.py`", it was not clear which plugins
+will exist. So a flexible way to share data between "`webber.py`" and
+the plugins was needed.
+
+Borrowed from IkiWiki came the idea of "Hooks". At various points
+during the exection "`webber.py`" fires some hooks. Any plugin can act
+to any hook and has a chance to get the current page or configuration
+attributes.
+
+It can then generate local data, change page attributes, generate HTML
+or whatever else is needed.
+
+
+= How to implement hooks =
+
+When you program your own [[Plugins]], you simply write python
+functions and mark then with the "`@set_hook(name)`" Decorator. See
+the Example at <a href="#addoptions">addoptions</a> below.
+
+
+= Hooks fired at startup =
+
+When you start "`webber`", the following hooks are executed:
 
 == addoptions ==
 
@@ -54,12 +77,14 @@ Example:
 		print "in start hook"
 
 
-= While reading source files =
+= Hooks fired while reading source files =
+
+For each file read, the following hooks are fired:
 
 == read ==
 
 Now webber walks the directory tree specified in "`cfg.in_dir"`, excluding
-anything from "`cfg.exclude_dir`" and "`cfg.exclude_file"`. For each of the
+anything from "`cfg.exclude_dirs`" and "`cfg.exclude_files"`. For each of the
 remaining files this hook is called.
 
 Usually the the "`read_*`" plugins implement this hook. And usually they look
@@ -68,7 +93,8 @@ If they do, the plugin should also set "`file.render`" is normally "`html"`.
 However, it can be something else. In this case "`file.render`" specifies a
 hook that get's called for this file.
 
-The first hook that returns contents wins, no other hooks will be called.
+The first hook that returns contents wins, no further hook-functions
+will be called.
 
 * "`params.direc`" contains a "`class Directory`" object
 * "`params.file`" contains a "`class File`" object
@@ -103,14 +129,15 @@ Example:
 		params.content = params.content.replace("e", "EEEEE")
 
 
-= After reading files =
+= Hooks fired after files are read =
 
-At this stage all pages and their meta-information has been read. Now we can
-generate additional data, e.g. page hierarchy, tag-clouds, lists of recently
-changed files, etc. This is done via the following two hooks.
+Now all pages and their meta-information has been read.
 
-The webber-supplied plugin [[hierarchy]] uses this
-mechanism.
+The following hooks allow plugins to use this data and generate
+additional data, e.g. a page hierarchy, tag-clouds, lists of recently
+changed files, etc.
+
+For example, the plugin [[hierarchy]] uses this mechanism.
 
 == scan ==
 
@@ -127,20 +154,25 @@ uses this to sort links.
 
 * "`params`" is empty.
 
-= While rendering files =
 
-The following hooks are called for each file that has a rendered in
-"`file.render`" set. See the "`read"`-hook in how to set it.
+= Hooks fired while creating HTML =
+
+The following hooks are called for each file that renders itself. This is indicated
+by the "`file.render`" attribute. See the "`read"`-hook on how to set that.
 
 If "`file.render`" is "`html"`, then the hooks "`htmlize"`, "`linkify`" and
-"`pagetemplate`" are run in this order. Otherwise the hook specified
-in "`file.render`" is called.
+"`pagetemplate`" are run (in that order).
+
+Otherwise the hook specified in "`file.render`" is called. This can
+even be a custom hook.
 
 == htmlize ==
 
 This hook converts contents into HTML.
 
-The first hook that returns HTML, no other hooks will be called.
+If more than one plugin receive this hook, then the first function
+returning HTML "wins". No other hook-functions will be called
+afterwards.
 
 * "`params.direc`" contains a "`class Directory`" object
 * "`params.file`" has a "`class File`" object
@@ -151,7 +183,8 @@ The first hook that returns HTML, no other hooks will be called.
 Functions that are called by this hook receive a pre-rendered HTML page.
 They can now modify this HTML further, e.g. py converting links to HTML.
 
-They can directly modify params.file.contents and don't need to return anything.
+They can directly modify params.file.contents and don't need to return
+anything.
 
 Implemented by the plugin [[link]] and [[toc]].
 
@@ -162,10 +195,10 @@ Implemented by the plugin [[link]] and [[toc]].
 == pagetemplate ==
 
 The implementation for this is responsible to generate the final html page,
-ready to be written. Implemented by [[template_mako]] plugin.
+ready to be written. Implemented in the [[template_mako]] plugin.
 
-The first hook that returns a finished HTML page, no other hooks will be
-called.
+The first hook that returns a finished HTML page wins, no further
+hook-functions will be called.
 
 * "`params.direc`" contains a "`class Directory`" object
 * "`params.file`" has a "`class File`" object
@@ -173,11 +206,14 @@ called.
 
 == copyfile ==
 
-This is one local hook, run instead of the "`htmlize"`, "`linkify`" and
-"`pagetemplate`" hooks. It's defined and implemented by the plugin
-[[read_copyonly]].
+This is an example of a plugin-defined hook. It's run instead of the
+"`htmlize"`, "`linkify`" and "`pagetemplate`" hooks by virtue of the
+"`file.render`" attribute.
 
-The first hook that returs anything wins, no other hooks will be called.
+It's defined and implemented by the plugin [[read_copyonly]].
+
+The first hook that returns anything wins, no further hook-functions
+will be called.
 
 * "`params.direc`" contains a "`class Directory`" object
 * "`params.file`" has a "`class File`" object
@@ -185,12 +221,14 @@ The first hook that returs anything wins, no other hooks will be called.
 = At the end =
 
 Now everythings has been converted to HTML and written out. And we're just
-one hook away from finishing webber:
+one hook away from finishing program execution:
 
 == finish ==
 
-This hook is called at the end of webber's execution. No webber-supplied
-plugin uses it currently, but you could use this to save local state into some
-file.
+This hook is called at the end of webber's execution.
 
 * "`params`" is empty
+
+Plugins that use this are [[link]] (to warn about wrong links),
+[[google_sitemap]] (to generate the "`sitemap.xml`" file) and [[rss_feed]]
+(to generate the "`feed.rss`" file).

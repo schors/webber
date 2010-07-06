@@ -5,12 +5,15 @@ lang: en
 ctime: 2009-06-24
 mtime: 2009-06-26
 
-= Help =
+Note that command line options can also be specified via [[configuration]].
+
+= Invoke help =
 
 As usualy, you can get command line help with "`-h`" or "`--help`":
 
+	$ webber/webber --help
 	usage: webber [options]
-	
+
 	options:
 	  -h, --help          show this help message and exit
 	  -i DIR, --in=DIR    input directory
@@ -51,5 +54,3 @@ to increase even more.
 
 With "`-k`" or "`--keepgoing`" you can tell webber to ignore errors in one
 page and continue with the next page.
-
-

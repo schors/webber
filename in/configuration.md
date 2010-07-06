@@ -2,89 +2,153 @@ title: Configuration
 parent: Webber
 lang: en
 ctime: 2009-06-24
-mtime: 2009-06-24
+mtime: 2010-07-06
+change: enhanced, fixed and clarified
 
-Configuration happens either the [[commandline]] or
-via the configuration file (described below). All Configurations are
-[[inherited|inheritance]] and or overwritable on a per-directory and
-per-file basis.
+Configuration happens either via [[commandline]] or with the
+configuration file (described below). All configurations are subject
+to [[inheritance]]. You can also overwritable any of them on a
+per-directory and/or per-file basis.
 
-The main means for configuration is the config file:
 
-= Format =
+= Config file format =
 
-Webber expects a `webber.conf` file in it's root directory. It should look like this:
+Webber expects file named "`webber.conf`" file in the root directory.
+It could look like this:
 
 	template: "default"
 	date_format: "%d.%m.%Y"
-	input_encoding: "iso-8859-1"
-	output_encoding: "iso-8859-1"
 	plugins: [
-	        "skeleton",
-	        "hierarchy",
-        	"link",
-	        "read_rst",
-        	"read_html",
-	        "read_copyonly",
-        	"read_markdown",
-	        "template_mako",
-        	]
+		"skeleton",
+		"hierarchy",
+		"link",
+		"read_rst",
+		"read_html",
+		"read_copyonly",
+		"read_markdown",
+		"template_mako",
+		"my_plugin",
+		]
 	plugin_dirs: [
 		"my_plugins"
 		]
-	exclude_dir: [
-		"webber.conf",
-		"*.tmpl",
-	        ]
-	exclude_files: [
-	        ]
 
-You could also some options with are normally defined by [[commandline]].
-This saves you from specifying them on ever run of webber:
+Options for the [[commandline]] can also be specified in the config file:
 
 	in_dir: "in"
 	out_dir: "out"
 	style_dir: "in/style"
 	verbose: 5
 
-Beside those entries, you can specify any additional entries that will then
-be available in your plugins or templates.
+= Webber's configuration =
 
-= Meaning =
+== in_dir ==
+
+Directory, where the source files (in [[markdown|read_markdown]],
+[[rst|read_rst]] or [[html|read_html]] format) reside.
+
+Default: "`in`".
+
+See [[commandline]].
+
+
+== out_dir ==
+
+Directory where webber creates the output files.
+
+Default: "`out`".
+
+See [[commandline]].
+
+
+== style_dir ==
+
+Directory where webber reads the [[template_mako]].
+
+Default: "`in/style`".
+
+See [[commandline]] and "`template`".
+
 
 == template ==
 
-Used by the [[template_mako]] to select the template.
+Used by [[template_mako]] to select the template.
 
-== date_format ==
+Default: `"template`"
 
-Used in `format_date()`.
 
 == input_encoding ==
 
-Encoding ('utf-8', 'iso-8859-1' etc) used for reading files.
+Encoding (e.g. 'utf-8', 'iso-8859-1' etc) used when reading [[source pages|pageformat]].
+
+Default: `"iso-8859-1`"
+
 
 == output_encoding ==
 
-Encoding ('utf-8', 'iso-8859-1' etc) used when writing the final HTML pages.
+Encoding (e.g. 'utf-8', 'iso-8859-1' etc) used when writing the final HTML pages.
+
+Default: `"iso-8859-1`"
+
 
 == plugins ==
 
-List of  to load.
+List of [[Plugins]] to load.
+
 
 == plugin_dirs ==
 
-List of directories that should be search for [[plugins|Plugins]]. Can be empty or
+List of directories that should be search for [[Plugins]]. Can be empty or
 completely omitted.
+
 
 == exclude_dirs ==
 
-List of directories below `cfg.in_dir` to skip.
+List of directories below "`in_dir`" to skip.
+
+Default: "`[]`"
+
 
 == exclude_files ==
 
-List of files below `cfg.in_dir` to skip.
+List of files below "`in_dir`" to skip.
 
-== in_dir, out_dir, style_dir ==
+Default: "`['webber.conf', 'directory.conf', '*.tmpl']`"
+
+
+== date_format ==
+
+Used in `format_date()`. The format is the same as in `"man 2 strftime`".
+
+
+== verbose ==
+
+How verbose webber should be.
 
 See [[commandline]].
+
+
+== keep_going ==
+
+If webber should continue after an error.
+
+See [[commandline]].
+
+
+= Plugin's configuration =
+
+Many [[Plugins]] can use custom options. Read more about them in their
+documentation.
+
+
+= User defined configuration =
+
+Beside those entries, you can specify any additional entries that will
+then be available in user-defined [[Plugins]], [[functions]],
+[[macros]] or [[template_mako]]. For example, after adding:
+
+	category: "Webber"
+
+you can access in [[template_mako]] with:
+
+	<p>Category: ${page.category}</p>
