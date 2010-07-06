@@ -58,7 +58,7 @@ regardless of it's age.
 
 = Support in the template =
 
-Your [[template|Mako template]] should mention your rss feed. One possible solution
+Your [[template_mako]] should mention your rss feed. One possible solution
 is this:
 
 	<head>
