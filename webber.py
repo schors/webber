@@ -445,12 +445,14 @@ def iso_to_time(val):
 	return int(time.mktime(t))
 
 @set_function("format_date")
-def format_date(timestamp):
-	return time.strftime(cfg.date_format, time.localtime(timestamp))
+def format_date(timestamp, format=None):
+	if not format:
+		format = cfg.date_format
+	return time.strftime(format, time.localtime(timestamp))
 
 @set_function("get_time")
-def get_time():
-	return format_date(time.time())
+def get_time(format=None):
+	return format_date(time.time(), format)
 
 @set_function("get_current_file")
 def get_current_file():

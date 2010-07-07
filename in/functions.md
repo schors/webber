@@ -2,8 +2,8 @@ title: Functions
 parent: Webber
 lang: en
 ctime: 2009-06-24
-mtime: 2010-06-24
-change: described get_toc()
+mtime: 2010-07-07
+change: allow custom format for get_time() and format_date()
 
 You can call functions only from [[template_mako]], not from
 [[pages|pageformat]]. If you need the latter, look at [[macros]].
@@ -17,17 +17,25 @@ You can call functions only from [[template_mako]], not from
 Here's list of functions defined by webber and it's default plugins:
 
 
-== format_date(timestamp) ==
+== format_date(timestamp, format) ==
 
 Takes a timestamp (seconds since 1st January 1970) and converts it into
-a string, using to `cfg.date_format`.
+a string.
+
+"`format`" is optional. If not used, "`cfg.date_format`" will be used.
+Otherwise it should be a format-string as documted by "`man strftime`". For
+example, "`%Y-%m-%d`" stands for year-month-date.
 
 Defined in `webber.py`.
 
 
-== get_time() ==
+== get_time(format) ==
 
-Returns the current date/time as a string according to `cfg.date_format`.
+Returns the current date/time as a string.
+
+"`format`" is optional. If not used, "`cfg.date_format`" will be used.
+Otherwise it should be a format-string as documted by "`man strftime`". For
+example, "`%Y-%m-%d`" stands for year-month-date.
 
 Defined in `webber.py`.
 
