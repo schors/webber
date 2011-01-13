@@ -49,13 +49,13 @@ def scan(params):
 		return
 
 	if file.has_key("links"):
-		memorize_links(file.linktitle, file.links)
+		memorize_links(file.title, file.links)
 	if file.has_key("parent"):
 		if file.has_key("order"):
 			order = int(file.order)
 		else:
 			order = 100
-		memorize_parent(file.linktitle, file.parent, order)
+		memorize_parent(file.title, file.parent, order)
 
 
 @set_hook("scan_done")
@@ -81,8 +81,8 @@ def get_breadcrumbs(orig_page=None):
 	res = [(orig_page, get_link_from(orig_page, orig_page))]
 	page = orig_page
 	#print "orig_page:", orig_page
-	while _parent.has_key(page.linktitle):
-		page = get_file_for(_parent[page.linktitle])
+	while _parent.has_key(page.title):
+		page = get_file_for(_parent[page.title])
 		link = get_link_from(orig_page, page)
 		#print "  page, link:", page, link
 		res.insert(0, (page, link))
@@ -104,8 +104,8 @@ def get_sidemenu(root="Home", level=1):
 
 	def do_menu(pg, level):
 		#print "pg, has_key:", pg, _childs.has_key(pg)
-		if _childs.has_key(pg.linktitle):
-			for p in _childs[pg.linktitle]:
+		if _childs.has_key(pg.title):
+			for p in _childs[pg.title]:
 				subpage = get_file_for(p[1])
 				in_bread = False
 				for b in bread:
@@ -136,15 +136,14 @@ def get_hierarchical_sitemap(root="Home", show_orphans=False):
 	visited = {root: True}
 	def do_menu(pg):
 		res = []
-		if _childs.has_key(pg.linktitle):
-			for p in _childs[pg.linktitle]:
+		if _childs.has_key(pg.title):
+			for p in _childs[pg.title]:
 				subpage = get_file_for(p[1])
 				visited[subpage] = True
 				res.append( do_menu(subpage) )
 		return (pg, get_link_from(root, pg), res)
-		
-	res = do_menu(root)
 
+	res = do_menu(root)
 
 	if show_orphans:
 		for f in files:
@@ -159,7 +158,7 @@ def get_hierarchical_sitemap(root="Home", show_orphans=False):
 			except KeyError:
 				continue
 			#print "not found:", file.linktitle
-			res.append( (file, get_link_from(page, file.linktitle), []) )
+			res.append( (file, get_link_from(page, file.title), []) )
 
 	#import pprint
 	#pprint.pprint(res, indent=4)
@@ -177,9 +176,9 @@ def get_linear_sitemap(root="Home", show_orphans=False, level=1):
 
 	def do_menu(pg, level):
 		#print "pg:", pg
-		#, _childs.has_key(pg.linktitle)
-		if _childs.has_key(pg.linktitle):
-			for p in _childs[pg.linktitle]:
+		#, _childs.has_key(pg.title)
+		if _childs.has_key(pg.title):
+			for p in _childs[pg.title]:
 				subpage = get_file_for(p[1])
 
 				#print "subpage:", subpage
@@ -204,7 +203,7 @@ def get_linear_sitemap(root="Home", show_orphans=False, level=1):
 			except KeyError:
 				continue
 			#print "not found:", file.linktitle
-			res.append( (0, file, get_link_from(page, file.linktitle)))
+			res.append( (0, file, get_link_from(page, file.title)))
 	#import pprint
 	#pprint.pprint(res)
 	return res
@@ -221,9 +220,10 @@ def get_recently(page=None, max_items=10):
 	orig_page = page
 
 	def addPage(res, page):
+		#print "page:", page
 		res.append( (page, get_link_from(orig_page, page)) )
-		if _childs.has_key(page.linktitle):
-			for c in _childs[page.linktitle]:
+		if _childs.has_key(page.title):
+			for c in _childs[page.title]:
 				addPage(res, get_file_for(c[1]))
 	addPage(res, orig_page)
 	res.sort(cmp = lambda x,y: cmp(y[0].mtime, x[0].mtime))

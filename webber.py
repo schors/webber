@@ -147,6 +147,10 @@ def get_file_for(name):
 				#print "  via linktitle:", s
 				_get_file_for_cache[name] = f
 				return f
+			if f.title == name:
+				#print "  via title:", s
+				_get_file_for_cache[name] = f
+				return f
 		except:
 			pass
 		# Allow exact match as well
@@ -215,8 +219,8 @@ def relpath(base_path, target):
 
 
 def get_link_from(source, dest):
-	#print "get_link_from", source, dest
-	#print source
+	if dest is None:
+		raise KeyError
 	if not isinstance(source, File):
 		source = get_file_for(source)
 	if not source:
