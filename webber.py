@@ -60,6 +60,9 @@ class Directory(Holder):
 		except IOError:
 			pass
 
+	def __repr__(self):
+		return "<Directory %s>" % self.rel_path
+
 
 files = {}
 current_file = None
@@ -127,6 +130,9 @@ class File(Holder):
 			log('%s: define a shorter linktitle' % self.rel_path)
 
 		self.contents = "".join(txt)
+
+	def __repr__(self):
+		return "<File %s>" % self.rel_path
 
 
 _get_file_for_cache = {}
