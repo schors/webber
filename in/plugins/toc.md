@@ -50,7 +50,7 @@ local anchors.
 This again is done via a suitable [[template_mako]]. The template uses
 the function "`get_toc()`" and returns (level, headline, slug) tuples.
 
-* "`level`" is the indendation level, starting with 0. You can use
+* "`level`" is the indentation level, starting with 0. You can use
   this for CSS "`id=`" or "`class`" attributes
 * "`headline`" is the headline (the text inside <hX>..</hX>)
 * "`slug`" is the

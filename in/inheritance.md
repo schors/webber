@@ -32,7 +32,7 @@ This is like the inheritance works:
 Due to parsing the [[commandline]] the attribute "`style_dir`" have
 some value. If you don't specify one, it will be "default" by default.
 
-Now the [[configuration]] file "`webber.conf`" get's processed. It may
+Now the [[configuration]] file "`webber.conf`" gets processed. It may
 set "`style`" to "twoframe", if you want a two-frame template for your
 web-site.
 

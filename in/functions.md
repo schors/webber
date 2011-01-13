@@ -23,7 +23,7 @@ Takes a timestamp (seconds since 1st January 1970) and converts it into
 a string.
 
 "`format`" is optional. If not used, "`cfg.date_format`" will be used.
-Otherwise it should be a format-string as documted by "`man strftime`". For
+Otherwise it should be a format-string as documented by "`man strftime`". For
 example, "`%Y-%m-%d`" stands for year-month-date.
 
 Defined in `webber.py`.
@@ -34,7 +34,7 @@ Defined in `webber.py`.
 Returns the current date/time as a string.
 
 "`format`" is optional. If not used, "`cfg.date_format`" will be used.
-Otherwise it should be a format-string as documted by "`man strftime`". For
+Otherwise it should be a format-string as documented by "`man strftime`". For
 example, "`%Y-%m-%d`" stands for year-month-date.
 
 Defined in `webber.py`.

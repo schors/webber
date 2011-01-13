@@ -15,7 +15,7 @@ during the "`pagetemplate`" [[hook|hooks]].
 == template ==
 
 Name of the template file. Must be specified in "`webber.conf`", but
-can be overriden, see "[[inheritance]]" and "[[pageformat]]".
+can be overridden, see "[[inheritance]]" and "[[pageformat]]".
 
 	template: "default"
 
@@ -76,7 +76,7 @@ and replace "`${body}`" with:
 	${self.contents()}
 
 Now you can create a new template file, e.g. "`history.tmpl`" that
-inherits from "`default.tmpl`" and add's a list of recently changed
+inherits from "`default.tmpl`" and adds a list of recently changed
 files:
 
 	<%inherit file="default.tmpl"/>

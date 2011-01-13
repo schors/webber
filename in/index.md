@@ -14,7 +14,7 @@ It works by ...
  * considering any number of [[plugins|Plugins]]
  * execution of [[macros|macros]]
  * execution of [[hooks|hooks]]
- * rendering throught a [[template|template_mako]], using [[functions|functions]]
+ * rendering through a [[template|template_mako]], using [[functions|functions]]
 
 Finally webber creates static HTML files that you can upload to your
 web-site. I recommend [[sitecopy|http://www.manyfish.co.uk/sitecopy/]]

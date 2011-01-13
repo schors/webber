@@ -11,7 +11,7 @@ will exist. So a flexible way to share data between "`webber.py`" and
 the plugins was needed.
 
 Borrowed from IkiWiki came the idea of "Hooks". At various points
-during the exection "`webber.py`" fires some hooks. Any plugin can act
+during the execution "`webber.py`" fires some hooks. Any plugin can act
 to any hook and has a chance to get the current page or configuration
 attributes.
 
@@ -88,10 +88,10 @@ anything from "`cfg.exclude_dirs`" and "`cfg.exclude_files"`. For each of the
 remaining files this hook is called.
 
 Usually the the "`read_*`" plugins implement this hook. And usually they look
-at the file-extension and decide if they the can procecess this file or not.
+at the file-extension and decide if they the can proprocecess this file or not.
 If they do, the plugin should also set "`file.render`" is normally "`html"`.
 However, it can be something else. In this case "`file.render`" specifies a
-hook that get's called for this file.
+hook that gets called for this file.
 
 The first hook that returns contents wins, no further hook-functions
 will be called.
@@ -220,7 +220,7 @@ will be called.
 
 = At the end =
 
-Now everythings has been converted to HTML and written out. And we're just
+Now everything has been converted to HTML and written out. And we're just
 one hook away from finishing program execution:
 
 == finish ==

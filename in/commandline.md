@@ -9,7 +9,7 @@ Note that command line options can also be specified via [[configuration]].
 
 = Invoke help =
 
-As usualy, you can get command line help with "`-h`" or "`--help`":
+As usual, you can get command line help with "`-h`" or "`--help`":
 
 	$ webber/webber --help
 	usage: webber [options]

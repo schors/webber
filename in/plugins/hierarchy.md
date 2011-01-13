@@ -99,7 +99,7 @@ template uses the function "`get_sidemenu()`" which returns (level,
 part_of_path, is_current, title, link) tuples. Again all links are relative
 to the calling page.
 
-* "`level`" is the indendation level, starting with 0. You can use this for
+* "`level`" is the indentation level, starting with 0. You can use this for
   CSS "`id=`" or "`class`" attributes
 * "`part_of_path`" is a flag telling you if the mentioned page is part
   of your path, i.e. if the specified page is in the breadcrumbs.

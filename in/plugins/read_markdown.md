@@ -10,7 +10,7 @@ This plugin reads "`*.md`" files and converts them to HTML.
 "[[Markdown|http://daringfireball.net/projects/markdown/]]" is a wiki-like
 text format. The plugin "`read_markdown.py`" doesn't use the 
 standard Python module "`markdown`", but instead the faster and simpler
-[[markdown2|http://code.google.com/p/python-markdown2/]] modoule.
+[[markdown2|http://code.google.com/p/python-markdown2/]] module.
 
 A sample "`test.md`" document looks like this:
 

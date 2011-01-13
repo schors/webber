@@ -9,7 +9,7 @@ This plugin copies files (e.g. graphics files) into the destination
 folder.
 
 To configure which files should be copied you modify
-[[webber.conf|configuration]]. An example snippet migth be:
+[[webber.conf|configuration]]. An example snippet might be:
 
 	copy_files: [
 	        "*.png",

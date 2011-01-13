@@ -7,7 +7,7 @@ change: enhanced, fixed and clarified
 
 Configuration happens either via [[commandline]] or with the
 configuration file (described below). All configurations are subject
-to [[inheritance]]. You can also overwritable any of them on a
+to [[inheritance]]. You can also overwrite any of them on a
 per-directory and/or per-file basis.
 
 

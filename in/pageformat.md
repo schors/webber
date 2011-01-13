@@ -119,7 +119,7 @@ For an example, look at <a href="#ctime">ctime</a> above.
 == template ==
 
 Allows you to override the default template. Just specify the pure file
-name. For convenience, you can ommit "`.tmpl`".
+name. For convenience, you can omit "`.tmpl`".
 
 	title: Blog
 	template: history
@@ -169,7 +169,7 @@ Here's a [[template_mako]] excerpt that uses this:
 
 Used by [[google_sitemap]]:
 
-Internally, [[Webber]] works with relative URLs and is quite agonistic
+Internally, [[Webber]] works with relative URLs and is quite agnostic
 about URL of the final website. However, the [[google_sitemap]] plugin
 needs absolute URLs, complete with host name.
 

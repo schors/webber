@@ -8,8 +8,8 @@ mtime: 2009-06-26
 This plugin reads HTML snippets from "`*.html`" files.
 
 Please note that currently the plugin assumes that this is a HTML snippet.
-That means: the snippes should only contain what is inside "`<body>`" and
-"`</body>`", but without those tags themselfes.
+That means: the snippets should only contain what is inside "`<body>`" and
+"`</body>`", but without those tags themselves.
 
 A sample "`test.html`" document looks like this:
 

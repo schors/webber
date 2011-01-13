@@ -23,7 +23,7 @@ Instead of an URL you can also specify the following things:
 * the short link title
 * the basename of the file (filename without extension and directory name)
 
-In this case the link plugin will search throught all pages and take the
+In this case the link plugin will search through all pages and take the
 first match.
 
 Example:

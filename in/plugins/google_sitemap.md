@@ -6,7 +6,7 @@ lang: en
 ctime: 2009-06-26
 mtime: 2009-06-26
 
-This plugins writes an XML file "`sitemap.xml`" into the out-directory. The
+This plugin writes an XML file "`sitemap.xml`" into the out-directory. The
 format is documented at [[http://www.sitemaps.org]].
 
 
@@ -49,7 +49,7 @@ e.g.:
 	Disallow: /logs/
 	Sitemap: http://www.holgerschurig.de/sitemap.xml
 
-Also make sure that your "`robots.txt`" file get's copied, by adding
+Also make sure that your "`robots.txt`" file gets copied, by adding
 
 	copy_files: [
 		...
