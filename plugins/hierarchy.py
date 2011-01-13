@@ -72,8 +72,19 @@ def scan_done(params):
 		# And now sort by priority. Since Python 2.2 and upwards has stable-sort,
 		# this effectively makes a two-dimensional sort.
 		_childs[c].sort(key = lambda x: x[0])
-	return
 
+	visited = {}
+	visited[get_file_for("Home")] = True
+	for f in _parent:
+		visited[f] = True
+	for f in files:
+		file = files[f]
+		if not file.has_key("linktitle"):
+			continue
+		if not visited.has_key(file ):
+			warning("orphan file '%s'" % f)
+
+	return
 	print "_parent:"
 	for c in _parent:
 		print " ", c, _parent[c]
