@@ -137,37 +137,20 @@ def get_sidemenu(root="Home", level=1):
 
 
 @set_function("get_hierarchical_sitemap")
-def get_hierarchical_sitemap(root="Home", show_orphans=False):
+def get_hierarchical_sitemap(root="Home"):
 	page = get_current_file()
 	if not isinstance(root, webber.File):
 		root = get_file_for(root)
 
-	visited = {root: True}
 	def do_menu(pg):
 		res = []
 		if _childs.has_key(pg):
 			for p in _childs[pg]:
 				subpage = p[1]
-				visited[subpage] = True
 				res.append( do_menu(subpage) )
 		return (pg, get_link_from(root, pg), res)
 
 	res = do_menu(root)
-
-	if show_orphans:
-		for f in files:
-			#print f
-			file = files[f]
-			if not file.has_key("linktitle"):
-				continue
-			try:
-				if file in visited:
-					#print "found", file.linktitle
-					continue
-			except KeyError:
-				continue
-			#print "not found:", file.linktitle
-			res.append( (file, get_link_from(page, file.title), []) )
 
 	#import pprint
 	#pprint.pprint(res, indent=4)
@@ -175,12 +158,11 @@ def get_hierarchical_sitemap(root="Home", show_orphans=False):
 
 
 @set_function("get_linear_sitemap")
-def get_linear_sitemap(root="Home", show_orphans=False, level=1):
+def get_linear_sitemap(root="Home", level=1):
 	page = get_current_file()
 	if not isinstance(root, webber.File):
 		root = get_file_for(root)
 
-	visited = {root: None}
 	res = [(0, root, get_link_from(page, root))]
 
 	def do_menu(pg, level):
@@ -193,26 +175,10 @@ def get_linear_sitemap(root="Home", show_orphans=False, level=1):
 				#print "subpage:", subpage
 				link = get_link_from(page, subpage)
 				res.append((level, subpage, link))
-				visited[subpage] = None
 				do_menu(subpage, level+1)
 
 	do_menu(root, level)
 
-	#print "visited:", visited
-	if show_orphans:
-		for f in files:
-			#print f
-			file = files[f]
-			if not file.has_key("linktitle"):
-				continue
-			try:
-				if file in visited:
-					#print "found", file.linktitle
-					continue
-			except KeyError:
-				continue
-			#print "not found:", file.linktitle
-			res.append( (0, file, get_link_from(page, file.title)))
 	#import pprint
 	#pprint.pprint(res)
 	return res

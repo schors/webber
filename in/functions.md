@@ -2,8 +2,8 @@ title: Functions
 parent: Webber
 lang: en
 ctime: 2009-06-24
-mtime: 2010-07-07
-change: allow custom format for get_time() and format_date()
+mtime: 2011-01-13
+change: remove reference to show_orphan
 
 You can call functions only from [[template_mako]], not from
 [[pages|pageformat]]. If you need the latter, look at [[macros]].
@@ -77,7 +77,7 @@ You'll need to specify "`root`" if your top-most page isn't named "`Home`".
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
 
-== get_linear_sitemap(root, show_orphans, level) ==
+== get_linear_sitemap(root, level) ==
 
 Returns all pages as "`(level, page, link)`" tuples, where "`page`" is a
 "`class File`"-object and link is a relative link from the current page to
@@ -86,9 +86,6 @@ Returns all pages as "`(level, page, link)`" tuples, where "`page`" is a
 You'll need to specify "`root`" if your top-most page isn't named "`Home`".
 
 The "`level`" will by default start at 1.
-
-To put pages into the sitemap that are outside the parent/child relationships,
-specify "`True`" for "`show_orphans`".
 
 Defined in [[hierarchy.py|hierarchy]], where you find an example.
 
