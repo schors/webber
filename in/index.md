@@ -38,7 +38,7 @@ Now we need a directory for our input files and output files:
 and create our first page using your favorite ${EDITOR}. It should
 look like this:
 
-	$ ${EDITOR} in/index.conf
+	$ ${EDITOR} in/index.md
 	$ cat in/index.md
 	title: Nothin' about me
 
