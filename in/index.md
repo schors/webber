@@ -4,6 +4,11 @@ ctime: 2009-06-24
 mtime: 2010-07-06
 change: added Tutorial
 
+<table class="softwareproject">
+<tr><td class="first">Repository:</td><td><a href="http://gitorious.org/webber">http://gitorious.org/webber</a></td></tr>
+<tr><td class="first">Mailing list:</td><td><a href="http://groups.google.com/group/webber-generator">http://groups.google.com/group/webber-generator</a></td></tr>
+</table>
+
 *Webber* is a <b>static</b> web-site generation tool, loosely based on ideas
 from IkiWiki and my own likings.
 
