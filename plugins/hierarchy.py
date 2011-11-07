@@ -5,7 +5,7 @@ import re
 
 reSPLIT = re.compile(r',\s*')
 
-# This hashes store webber.File instances
+# These hashes store webber.File instances
 _childs = {}
 _parent = {}
 
