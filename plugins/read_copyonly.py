@@ -16,7 +16,7 @@ def read(params):
 @set_hook("copyfile")
 def copyfile(params):
 	file = params.file
-	log("copying file %s" % file.rel_path, level=7)
+	log.info("copying file %s" % file.rel_path)
 	out_path = os.path.join(cfg.out_dir, file.rel_path)
 	out_dir  = os.path.split(out_path)[0]
 	try:

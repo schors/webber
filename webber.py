@@ -1,8 +1,23 @@
 # -*- coding: iso-8859-1 -*-
-import sys, os, optparse, fnmatch, stat, re, time, codecs
+import sys
+import os
+import optparse
+import fnmatch
+import stat
+import re
+import time
+import codecs
+import logging
+
 from config import Holder
 
 
+log = logging.getLogger(__name__)
+# This setting can be changed depending on parameters and/or config
+log.setLevel(logging.DEBUG)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(logging.Formatter('[%(levelname)s] %(asctime)s - %(name)s - %(message)s'))
+log.addHandler(stream_handler)
 
 ###############################################################################
 #
@@ -122,7 +137,7 @@ class File(Holder):
 
 		# Warn about a bogus time entries
 		if self.mtime < self.ctime:
-			log('%s: modification time cannot be before creation time' % self.rel_path)
+			log.warning('%s: modification time cannot be before creation time' % self.rel_path)
 			self.ctime = self.mtime
 
 		# Warn about long titles / long linktitles
@@ -279,24 +294,15 @@ def get_program_directory():
 #	4	 Log
 #	5... Debug
 #
-def log(s, level=4):
-	if level > 4:
-		indent = " " * (level-4)
-	else:
-		indent = ""
-	if level <= cfg.verbose:
-		print "%s%s" % (indent, s)
 
 def error(s):
-	log("error: %s" % s, 1)
+    log.error(s)
 
 def warning(s):
-	log("warning: %s" % s, 2)
+    log.warning(s)
 
 def info(s):
-	log("info: %s" % s, 3)
-
-
+    log.info(s)
 
 ###############################################################################
 #
@@ -386,7 +392,7 @@ def run_hooks(name, **kw):
 	# Need to wrap this because run_hooks() is called before
 	# cfg.verbose has been set
 	try:
-		log("running hook '%s'" % name, level=7)
+		log.debug("running hook '%s'" % name)
 	except:
 		AttributeError
 
@@ -499,7 +505,7 @@ def read_file(direc, file):
 		return
 	file.contents = contents
 
-	log("filtering file %s" % file.rel_path, level=6)
+	log.debug("filtering file %s" % file.rel_path)
 	res = run_hooks("filter",
 		direc=direc,
 		file=file)
@@ -525,7 +531,7 @@ def walk_tree(dirpath):
 		direc.inheritFrom(cfg)
 
 		if not rel_path: rel_path = "."
-		log("reading directory %s" % rel_path, level=5)
+		log.info("reading directory %s" % rel_path)
 
 		for s in os.listdir(dirpath):
 			full_path = os.path.join(dirpath, s)
@@ -533,7 +539,7 @@ def walk_tree(dirpath):
 			if os.path.isdir(full_path):
 				for e in cfg.exclude_dirs:
 					if fnmatch.fnmatchcase(s, e):
-						log("ignoring directory %s" % s, level=7)
+						log.info("ignoring directory %s" % s)
 						ok = False
 						break
 				if ok:
@@ -542,7 +548,7 @@ def walk_tree(dirpath):
 			if os.path.isfile(full_path):
 				for e in cfg.exclude_files:
 					if fnmatch.fnmatchcase(s, e):
-						log("ignoring file %s" % s, level=7)
+						log.info("ignoring file %s" % s)
 						ok = False
 						break
 				if ok:
@@ -551,11 +557,11 @@ def walk_tree(dirpath):
 					# Allow paths to be specified in exclude_files:
 					for e in cfg.exclude_files:
 						if fnmatch.fnmatch(rel_path, e):
-							log("ignoring file %s" % rel_path, level=7)
+							log.info("ignoring file %s" % rel_path)
 							ok = False
 							break
 				if ok:
-					log("reading file %s" % rel_path, level=5)
+					log.debug("reading file %s" % rel_path)
 					file = File(
 						path = full_path,
 						rel_path = rel_path,
@@ -657,7 +663,7 @@ def render_files():
 
 		# Do we have a renderer?
 		if file.render is None:
-			log("unhandled file: %s" % file.rel_path, 7)
+			log.warning("unhandled file: %s" % file.rel_path)
 			continue
 
 		# Is the renderer not the default HTML renderer?
@@ -723,7 +729,7 @@ def render_files():
 
 		# TODO: check if contents == f.read(). In this case we don't
 		# need to save. Probably overkill.
-		log("writing file %s" % fname_out, level=6)
+		log.info("writing file %s" % fname_out)
 		f = open(fname_out, "w")
 		f.write(contents)
 		f.close()
@@ -749,11 +755,11 @@ def addoptions(params):
 		help="output directory",
 		metavar="DIR")
 	parser.add_option("--style-dir", dest="style_dir", default="in/style",
-		help="directory with style sheets",
+		help="Directory containing templates",
 		metavar="STYLE")
 	parser.add_option("-v", "--verbose", action="count",
-		dest="verbose", default=3,
-		help="print status messages to stdout")
+		dest="verbose", default=20,
+                   help="Level of logging verbosity. Default: 20 (INFO)")
 	parser.add_option("-k", "--keepgoing", dest="keepgoing",
 		action="store_true", default=False,
 		help="keep going past errors if possible")
@@ -769,8 +775,6 @@ def checkconfig(params):
 
 
 def main():
-	global cfg
-
 	# Get configuration from webber.ini
 	cfg.load('webber.conf')
 
@@ -785,6 +789,10 @@ def main():
 	# Recast options into a Holder object, this allows
 	# us to use it for Mapping.inheritFrom()
 	options = Holder(**parser.values.__dict__)
+
+        # Configure logging
+        log.setLevel(options.verbose)
+
 
 	# link contents of webber.ini into cfg and set some defaults,
 	# then let plugins fixup things in cfg.*

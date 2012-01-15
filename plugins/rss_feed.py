@@ -14,7 +14,7 @@ max_age = 0
 @set_hook("checkconfig")
 def checkconfig(params):
 	if not cfg.has_key("rss_file"):
-		log('no "rss_file:" configured, using "feed.rss":', 4)
+		log.info('no "rss_file:" configured, using "feed.rss":')
 		cfg.rss_file = "feed.rss"
 	if not cfg.has_key("rss_max_items"):
 		cfg.rss_max_items = 0
