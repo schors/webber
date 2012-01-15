@@ -1,9 +1,9 @@
 
 all: webber.conf
-	./webber
+	python webber
 
 profile:
-	./webber --profile
+	python webber --profile
 
 lint:
 	pylint \
