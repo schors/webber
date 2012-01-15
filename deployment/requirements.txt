@@ -1,0 +1,4 @@
+docutils==0.8.1
+mako==0.5.0
+Jinja2==2.6
+MarkUpSafe==0.15
