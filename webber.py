@@ -126,8 +126,8 @@ class File(Holder):
 			self.ctime = self.mtime
 
 		# Warn about long titles / long linktitles
-		if len(self.linktitle) > 20:
-			log('%s: define a shorter linktitle' % self.rel_path)
+		#if len(self.linktitle) > 20:
+		#	log('%s: define a shorter linktitle' % self.rel_path)
 
 		self.contents = "".join(txt)
 

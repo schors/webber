@@ -1,0 +1,9 @@
+{% extends "jinja.html" %}
+{% block body %}
+{{ super() }}
+<ul>
+{% for level, page, link in get_linear_sitemap("Webber", True) %}
+<li class="sitemap{{level}}"><a href="{{link}}">{{page.title}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
