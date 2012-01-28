@@ -496,7 +496,9 @@ class Markdown(object):
 			 + indent + ('\n'+indent).join(lines)
 			 + '\n\n')
                 # Return highlighted code
-		return highlight(s, PythonLexer(), HtmlFormatter())
+		return highlight(
+                    s, PythonLexer(stripall=True), HtmlFormatter()
+                )
 
 	def _prepare_pyshell_blocks(self, text):
 		"""Ensure that Python interactive shell sessions are put in
