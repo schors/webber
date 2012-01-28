@@ -491,7 +491,7 @@ class Markdown(object):
 	def _pyshell_block_sub(self, match):
 		lines = match.group(0).splitlines(0)
 		_dedentlines(lines)
-		indent = ' ' * self.tab_width
+                indent = ''
 		s = ('\n' # separate from possible cuddled paragraph
 			 + indent + ('\n'+indent).join(lines)
 			 + '\n\n')
