@@ -40,3 +40,9 @@ changed this way:
   this)
 * logging removed
 * allow "= Header =" in addition to "# Header #"
+
+Python
+
+	>>> s = "KEK"
+	>>> s
+	"KEK"

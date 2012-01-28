@@ -13,13 +13,20 @@ from webber import *
 #	* allow "= Header =" in addition to "# Header #"
 #
 
-import os, sys, re, codecs
+import os
+import sys
+import re
+import codecs
+
 try:
 	from hashlib import md5
 except ImportError:
 	from md5 import md5
 from random import random, randint
 
+from pygments import highlight
+from pygments.lexers import PythonLexer, guess_lexer
+from pygments.formatters import HtmlFormatter
 
 
 #---- Python version compat
@@ -488,7 +495,8 @@ class Markdown(object):
 		s = ('\n' # separate from possible cuddled paragraph
 			 + indent + ('\n'+indent).join(lines)
 			 + '\n\n')
-		return s
+                # Return highlighted code
+		return highlight(s, PythonLexer(), HtmlFormatter())
 
 	def _prepare_pyshell_blocks(self, text):
 		"""Ensure that Python interactive shell sessions are put in
@@ -497,7 +505,7 @@ class Markdown(object):
 		if ">>>" not in text:
 			return text
 
-		less_than_tab = self.tab_width - 1
+		less_than_tab = self.tab_width
 		_pyshell_block_re = re.compile(r"""
 			^([ ]{0,%d})>>>[ ].*\n	 # first line
 			^(\1.*\S+.*\n)*			# any number of subsequent lines
@@ -1625,6 +1633,7 @@ def htmlize(params):
 	global _markdown
 	if not _markdown:
 		_markdown = Markdown(extras={
+                        "pyshell": True,
 			"code-friendly":True,
 			"xml":True,
 			"demote-headers":1,
