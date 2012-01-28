@@ -48,6 +48,10 @@ def get_file_for_filename(thisfile, parent_name):
             search_path, parent_name
         )
 
+        # Prevent linking to self
+        if search_path == get_extensionless_path(thisfile.rel_path):
+            continue
+
         for s in files:
             f = files[s]
             try:
