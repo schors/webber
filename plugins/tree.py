@@ -145,7 +145,7 @@ def scan_done(params):
         visited[f] = True
     for f in files:
         file = files[f]
-        if not visited.has_key(file ):
+        if not visited.has_key(file):
             warning("orphan file '%s'" % f)
 
 
