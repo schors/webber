@@ -67,6 +67,11 @@ def get_file_for_filename(thisfile, parent_name):
                 #print "  exact:", s
             #    _get_file_for_fileparent_name_cache[name] = f
             #    return f
+
+    # As a last possibility, see if we could just return the current page
+    if get_extensionless_path(thisfile.rel_path) == parent_name:
+        return thisfile
+
     return None
 
 def get_file_basename(file_path):
