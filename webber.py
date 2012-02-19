@@ -240,8 +240,6 @@ def relpath(base_path, target):
 
 
 def get_link_from(source, dest):
-	if dest is None:
-		raise Exception('`dest` is None for %s' % source)
 	if not isinstance(source, File):
 		source = get_file_for(source)
 	if not source:
