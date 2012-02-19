@@ -240,29 +240,30 @@ def relpath(base_path, target):
 
 
 def get_link_from(source, dest):
-	if not isinstance(source, File):
-		source = get_file_for(source)
-	if not source:
-		print "NO SOURCE"
-		return "."
-	if not isinstance(dest, File):
-		dest = get_file_for(dest)
-	if not dest:
-		warning("unknown link from %s to %s" % (source.rel_path, dest))
-		return "."
-	rel_path = relpath(directories[source.direc].abs_path, directories[dest.direc].abs_path)
-	try:
-		out_path = dest.out_path
-	except:
-		out_path = ""
-	#print dest
-	rel_path = os.path.join(rel_path, os.path.split(out_path)[1])
-	if rel_path.startswith("./"):
-		rel_path = rel_path[2:]
-	#print "  from path:", source.out_path
-	#print "  to path:	", out_path
-	#print "  rel path: ", rel_path
-	return rel_path
+    if not isinstance(source, File):
+            source = get_file_for(source)
+    if not source:
+            print "NO SOURCE"
+            return "."
+    if not isinstance(dest, File):
+            dest = get_file_for(dest)
+    if not dest:
+            warning("unknown link from %s to %s" % (source.rel_path, dest))
+            return "."
+
+    rel_path = relpath(directories[source.direc].abs_path, directories[dest.direc].abs_path)
+    try:
+            out_path = dest.out_path
+    except:
+            out_path = ""
+    #print dest
+    rel_path = os.path.join(rel_path, os.path.split(out_path)[1])
+    if rel_path.startswith("./"):
+            rel_path = rel_path[2:]
+    #print "  from path:", source.out_path
+    #print "  to path:	", out_path
+    #print "  rel path: ", rel_path
+    return rel_path
 
 
 
