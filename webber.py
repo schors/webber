@@ -708,13 +708,19 @@ def render_files():
 
 		# TODO: make it possible to render also "fragments", e.g.
 		# parts that don't end up immediately in a the HTML file.
-		contents = run_hooks("pagetemplate",
-			direc=direc,
-			file=file,
-			stop_if_result=True,
-			return_holder=False)
-		#print "contents after 'pagetemplate':", contents
-
+		log.info("Rendering file %s" % file)
+                try:
+                    contents = run_hooks("pagetemplate",
+                            direc=direc,
+                            file=file,
+                            stop_if_result=True,
+                            return_holder=False)
+                except KeyError, e:
+                    log.error(
+                        'Missing attribute(s) %s in file %s. Output may be incomplete',
+                        ', '.join(e.args),
+                        file
+                    )
 
 		# Output-Directory erzeugen
 		fname_out = os.path.join(cfg.out_dir, file.out_path)
@@ -727,7 +733,7 @@ def render_files():
 
 		# TODO: check if contents == f.read(). In this case we don't
 		# need to save. Probably overkill.
-		log.info("writing file %s" % fname_out)
+		log.info("Writing file %s" % fname_out)
 		f = open(fname_out, "w")
 		f.write(contents)
 		f.close()
