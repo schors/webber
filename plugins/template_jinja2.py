@@ -4,16 +4,17 @@ import types
 import datetime
 import webber
 
-from webber import set_hook, cfg, relpath, functions
+from webber import set_hook, cfg, functions
 
 from jinja2 import Environment, FileSystemLoader
 
 
 @set_hook('pagetemplate')
 def pagetemplate(params):
-    env = Environment(loader=FileSystemLoader(os.path.join(
+    template_path = os.path.join(
         os.path.dirname(webber.__file__), cfg.style_dir
-    )))
+    )
+    env = Environment(loader=FileSystemLoader(template_path))
 
     # Register filters
     for filter in filters:
@@ -27,6 +28,7 @@ def pagetemplate(params):
     kw = {
         'file': params.file,
         'body': params.file.contents,
+        'static_url': cfg.static_url
     }
     kw.update(params.file)
     kw.update(functions)
