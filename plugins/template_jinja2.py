@@ -45,7 +45,7 @@ def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     if type(value) is types.StringType:
         value = int(value)
 
-    if type(value) is types.IntType:
+    if type(value) in (types.IntType, types.LongType):
        value = datetime.datetime.fromtimestamp(value)
     return value.strftime(format)
 
